@@ -1,0 +1,92 @@
+package bookstore;
+
+public class Address {
+	private String addrFirstLine="";
+	boolean addrFirstLineMissing = true;
+	private String addrSecondLine="";
+	boolean addrSecondLineMissing = true;
+	private String addrCity="";
+	boolean addrCityMissing = true;
+	private String addrState="";
+	boolean addrStateMissing = true;
+	private String addrZip="";
+	boolean addrZipMissing = true;
+
+	public Address() {
+	}
+	
+	public Address (String addrFirstLine, String addrSecondLine, String addrCity,
+			String addrState, String addrZip) {
+		setAddrFirstLine(addrFirstLine);
+		setAddrSecondLine(addrSecondLine);
+		setAddrCity(addrCity);
+		setAddrState(addrState);
+		setAddrZip(addrZip);
+	}
+
+	public String getAddrFirstLine() {
+		return addrFirstLine;
+	}
+
+	public void setAddrFirstLine(String addrFirstLine) {
+		addrFirstLineMissing = (addrFirstLine == null || addrFirstLine.isEmpty()) ? true : false;
+		this.addrFirstLine = addrFirstLine;
+	}
+
+	public boolean isAddrFirstLineMissing() {
+		return addrFirstLineMissing;
+	}
+
+	public String getAddrSecondLine() {
+		return addrSecondLine;
+	}
+
+	public void setAddrSecondLine(String addrSecondLine) {
+		addrSecondLineMissing = (addrSecondLine == null || addrSecondLine.isEmpty()) ? true : false;
+		this.addrSecondLine = addrSecondLine;
+	}
+
+	public boolean isAddrSecondLineMissing() {
+		return addrSecondLineMissing;
+	}
+
+	public String getAddrCity() {
+		return addrCity;
+	}
+
+	public void setAddrCity(String addrCity) {
+		addrCityMissing = (addrCity == null || addrCity.isEmpty()) ? true : false;
+		this.addrCity = addrCity;
+	}
+
+	public boolean isAddrCityMissing() {
+		return addrCityMissing;
+	}
+
+	public String getAddrState() {
+		return addrState;
+	}
+
+	public void setAddrState(String addrState) {
+		addrStateMissing = (addrState == null || addrState.isEmpty()) ? true : false;
+		this.addrState = addrState;
+	}
+
+	public boolean isAddrStateMissing() {
+		return addrStateMissing;
+	}
+
+	public String getAddrZip() {
+		return addrZip;
+	}
+
+	public void setAddrZip(String addrZip) {
+		addrZipMissing = (addrZip == null || addrZip.isEmpty()) ? true : false;
+		this.addrZip = addrZip;
+	}
+
+	public boolean isAddrZipMissing() {
+		return addrZipMissing;
+	}
+	
+}
