@@ -39,6 +39,7 @@ public class TestUserRepository {
 		repository.save(tom);
 		repository.save(patrick);
 		repository.save(john);
+		assertThat(repository.count(), equalTo(3L));
 	}
 	
 	
