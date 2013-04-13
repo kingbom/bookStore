@@ -12,15 +12,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
+
+import bookstore.entity.User;
+import bookstore.repository.UserRepository;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-import stemen.entity.User;
-import stemen.repository.UserRepository;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:simple-repository-context.xml")
+@ContextConfiguration(locations = "classpath:applicationContext.xml")
 public class TestUserRepository {
 	private final Logger LOGGER = Logger.getLogger(TestUserRepository.class);
 

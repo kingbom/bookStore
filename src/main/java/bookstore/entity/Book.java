@@ -1,4 +1,4 @@
-package stemen.entity;
+package bookstore.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

@@ -2,11 +2,14 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
+   <!-- 	<context:component-scan base-package="bookstore"/>  -->
 	<import resource="infrastructure.xml" />
 
-	<jpa:repositories base-package="stemen.repository" />
+	<jpa:repositories base-package="bookstore.repository" />
+	
 	
 </beans>
