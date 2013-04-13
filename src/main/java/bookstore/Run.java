@@ -1,13 +1,7 @@
 package bookstore;
 
 import org.apache.log4j.Logger;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.stereotype.Component;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
 import bookstore.entity.User;
 import bookstore.repository.UserRepository;
 
@@ -24,7 +18,7 @@ public class Run {
 	 */
 	public static void main(String[] args) {
 		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
-		repository=(UserRepository) ctx.getBean(UserRepository.class);
+		repository=ctx.getBean(UserRepository.class);
 		logger.info("Number of users in the db before adding more: " + repository.count());
 		
 		User tom = new User("123 California", "Apt 143", "LA", "Tom@gmail.com", "Tom", "Hanks", "Itsasecret", "CA","54221");
