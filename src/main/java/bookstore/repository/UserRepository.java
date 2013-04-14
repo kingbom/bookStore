@@ -11,5 +11,6 @@ import bookstore.entity.User;
 import bookstore.entity.*;
 
 public interface UserRepository extends JpaRepository<User, Long> {
-	User findUserByEmailIgnoreCaseAndPassword(String email, String password);
+	public User findUserByEmailIgnoreCaseAndPassword(String email, String password);
+	public User findUserByEmailIgnoreCase(String email);
 }

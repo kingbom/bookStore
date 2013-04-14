@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+<%-- <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -7,7 +7,7 @@
 <title>User Profile</title>
 </head>
 <body>
-	<%@ page import="bookstore.UserBean;"%>
+	<%@ page import="bookstore.workerbeans.UserBeanImpl;"%>
 	<table>
 		<tr>
 			<jsp:include page="./header.jsp" />
@@ -16,7 +16,7 @@
 			<td>
 				<form action="/BookStore/BookStoreServlet" method="post">
 					<jsp:useBean id="userbean" scope="session"
-						class="bookstore.UserBean" />
+						class="bookstore.workerbeans.UserBeanImpl" />
 					<jsp:useBean id="addressbean" scope="session"
 						class="bookstore.Address" />
 
@@ -52,7 +52,7 @@
 							<td align="right">
 								<%
 									if (userbean.isEmailAddressMissing() == true
-											|| userbean.isEmailAddressDupl() == true) {
+																	|| userbean.isEmailAddressDupl() == true) {
 								%> <warn>*</warn> <%
  	}
  %>E-mail:
@@ -112,7 +112,7 @@
 						</tr>
 					</table>
 					<%
-						if (userbean.getUserStatus() != UserBean.UserStatus.NEW) {
+						if (userbean.getUserStatus() != UserBeanImpl.NEW) {
 					%>
 					<input type="submit" value="Update User" /> <input type="hidden"
 						name="command" value="UpdateUser" />
@@ -133,4 +133,4 @@
 		</tr>
 	</table>
 </body>
-</html>
+</html> --%>

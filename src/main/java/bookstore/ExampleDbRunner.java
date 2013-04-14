@@ -8,8 +8,8 @@ import bookstore.repository.UserRepository;
 
 //@Component
 //@ContextConfiguration(locations = "classpath:applicationContext.xml")
-public class Run {
-	private static Logger logger = Logger.getLogger(Run.class.getName());
+public class ExampleDbRunner {
+	private static Logger logger = Logger.getLogger(ExampleDbRunner.class.getName());
 	
 	private static UserRepository repository;
 	

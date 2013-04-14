@@ -21,7 +21,7 @@ import static org.hamcrest.Matchers.*;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:applicationContext.xml")
+@ContextConfiguration(locations = "file:src/main/webapp/WEB-INF/spring/applicationContext.xml")
 public class TestUserRepository {
 	private final Logger LOGGER = Logger.getLogger(TestUserRepository.class);
 
@@ -33,9 +33,10 @@ public class TestUserRepository {
 
 	@Before
 	public void setUp() {
-		tom = new User("123 California", "Apt 143", "LA", "Tom@gmail.com", "Tom", "Hanks", "Itsasecret", "CA","54221");
-		patrick = new User("847 Mapple Dr.", "", "Washington", "Patrick@gmail.com", "Patrick", "Steward", "moneyMonkey", "MD","64541");
-		john = new User("8484 Bristol", "", "Columbus", "john@gmail.com", "John", "Roberts", "pass", "OH","57963");
+		tom = new User("123 California", "Apt 143", "LA", "Tom@gmail.com", "Tommy", "Hanks", "Itsasecret345", "CA","54221");
+		patrick = new User("847 Mapple Dr.", "", "Washington", "Patrick@gmail.com", "Patrick", "Steward345345", "moneyMonkey", "MD","64541");
+		john = new User("8484 Bristol", "", "Columbus", "john@gmail.com", "John", "Roberts", "pass3453453", "OH","57963");
+
 		repository.save(tom);
 		repository.save(patrick);
 		repository.save(john);

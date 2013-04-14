@@ -10,11 +10,27 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import bookstore.entity.User;
+import bookstore.repository.UserRepository;
+import bookstore.workerbeans.UserBean;
+import bookstore.workerbeans.UserBeanImpl;
+
 /**
  * Servlet implementation class BookStoreServlet
  */
+@Component
 @WebServlet(description = "Book Store Servlet for 605.782 Class Project", urlPatterns = { "/BookStoreServlet" })
 public class BookStoreServlet extends HttpServlet {
+	
+	@Autowired
+	private UserBean userBean;
+	
+	private final static String MAIN_JSP = "/main.jsp";
+	private final static String USER_PROFILE_JSP = "/user_profile.jsp";
+	
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -37,10 +53,9 @@ public class BookStoreServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		String command;
-		UserBean userBean;
 		String url = "/main.jsp";
+		User dbUser = null;
 		
 		command = request.getParameter("command");
 		
@@ -48,29 +63,26 @@ public class BookStoreServlet extends HttpServlet {
 		
 		if (command != null) {
 			if (command.equalsIgnoreCase("CreateUser")) {
+
+				try{
+					dbUser = userBean.updateUser(request, response);
+					url = MAIN_JSP;
+				}catch(Exception e){
+					url = USER_PROFILE_JSP;
+				}
 				
-				userBean = updateUser(request, response);
-				userBean.validateUser();
-				if (userBean.isUserValid()) {
-					userBean.createUser();
-					url = "/main.jsp";
-				}
-				else {
-					url = "/user_profile.jsp";
-				}
-				request.getSession().setAttribute("userbean", userBean);
+				request.getSession().setAttribute("userbean", dbUser);
 			}
 			else if (command.equalsIgnoreCase("UpdateUser")) {
-				userBean = updateUser(request, response);
-				userBean.validateUser();
-				if (userBean.isUserValid()) {
-					userBean.updateUser();
-					url = "/main.jsp";
+				try{
+					dbUser = userBean.insertUser(request, response);
+					url = MAIN_JSP;
+				}catch(Exception e){
+					url = USER_PROFILE_JSP;
 				}
-				else {
-					url = "/user_profile.jsp";
-				}
-				request.getSession().setAttribute("userbean", userBean);				
+				request.getSession().setAttribute("userbean", dbUser);				
+			}else{
+				throw new IllegalArgumentException("The command in the servlet didn't match anything.");
 			}
 		}
 		System.out.println("url: " + url);
@@ -79,26 +91,6 @@ public class BookStoreServlet extends HttpServlet {
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
 		dispatcher.forward(request, response);
 		
-	}
-	
-	private UserBean updateUser (HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("Email: " + request.getParameter("emailAddress"));
-		
-		UserBean userBean = (UserBean) request.getSession().getAttribute("userbean");
-		if(userBean == null) {
-			userBean = new UserBean();
-		}
-		userBean.setEmailAddress(request.getParameter("emailAddress"));
-		userBean.setFirstName(request.getParameter("firstName"));
-		userBean.setLastName(request.getParameter("lastName"));
-		userBean.setPassword(request.getParameter("password"));
-		userBean.setAddrFirstLine(request.getParameter("addrFirstLine"));
-		userBean.setAddrSecondLine(request.getParameter("addrSecondLine"));
-		userBean.setAddrCity(request.getParameter("addrCity"));
-		userBean.setAddrState(request.getParameter("addrState"));
-		userBean.setAddrZip(request.getParameter("addrZip"));
-
-		return userBean;
 	}
 
 }

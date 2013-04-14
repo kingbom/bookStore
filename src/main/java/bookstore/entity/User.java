@@ -4,22 +4,33 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.NamedQuery;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 public class User {
 	private String addressFirstLine;
 	private String addressSecondLine;
 	private String city;
+	@Column(unique = true)
+	@Email
 	private String email;
+	@NotEmpty
 	private String firstName;
 	@javax.persistence.Id
 	@GeneratedValue
 	private Long Id;
+	@NotEmpty
 	private String lastName;
+	@NotEmpty
 	private String password;
 	private String state;
 	private String zipcode;
 	
+	//No arg constructor needed for jpa
 	public User(){};
 	
 	/* (non-Javadoc)

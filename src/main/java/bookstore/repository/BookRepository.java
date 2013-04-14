@@ -8,9 +8,9 @@ import bookstore.entity.Book.Category;
 
 public interface BookRepository extends JpaRepository<Book, String> {
 
-	//List<Book> findBooks();
 	List<Book> findBooksByIsSpecial(Boolean isSpecial);
 	List<Book> findBooksByCategory(Category category);
 	Book findBookByIsbn(String ISBN);
-	//List<Book> findBookByKeyword(String keyword);
+	List<Book> findBookByAuthor(String author);
+	List<Book> findBookByTitle(String title);
 }

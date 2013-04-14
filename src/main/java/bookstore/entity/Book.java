@@ -3,6 +3,9 @@ package bookstore.entity;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+
+
+
 @Entity
 public class Book {
 	public enum Category{Comedy, History, Romance, ScienceFiction}
@@ -21,11 +24,14 @@ public class Book {
 
 	private String title;
 	
-	
+	//No arg constructor needed for JPA
+	public Book(){}
 	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
+	
+	
 	@Override
 	public String toString() {
 		return "Book [author=" + author + ", category=" + category
