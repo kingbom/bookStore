@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import bookstore.entity.User;
 import bookstore.workerbeans.UserDatabaseAccessor;
@@ -18,6 +19,7 @@ import bookstore.workerbeans.UserDatabaseAccessor;
 /**
  * Servlet implementation class BookStoreServlet
  */
+@Component
 @WebServlet(description = "Book Store Servlet for 605.782 Class Project", urlPatterns = { "/BookStoreServlet" })
 public class BookStoreServlet extends HttpServlet {
 	
