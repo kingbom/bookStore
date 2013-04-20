@@ -40,7 +40,7 @@ public class User {
 	boolean lastNameMissing = true;
 	//@NotEmpty
 	private String password;
-	boolean passwordMissing = true;;
+	boolean passwordMissing = true;
 	private String state;
 	private boolean stateMissing = true;
 	private UserStatus userStatus = UserStatus.NEW;
@@ -276,6 +276,7 @@ public class User {
 	 */
 	public void setEmail(String email) {
 		this.email = email;
+		this.emailAddressMissing = (email == null || email.isEmpty()) ? true : false;
 	}
 	/**
 	 * @param firstName the firstName to set
@@ -295,6 +296,7 @@ public class User {
 	 */
 	public void setPassword(String password) {
 		this.password = password;
+		this.passwordMissing = (password == null || password.isEmpty()) ? true : false;
 	}
 
 	/**

@@ -20,6 +20,8 @@ import bookstore.workerbeans.UserDatabaseAccessor;
  */
 @WebServlet(description = "Book Store Servlet for 605.782 Class Project", urlPatterns = { "/BookStoreServlet" })
 public class BookStoreServlet extends HttpServlet {
+	
+	public static final String SESSION_USER = "user";
 	private static final long serialVersionUID = 1L;
        
 	@Autowired
@@ -47,7 +49,7 @@ public class BookStoreServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String command;
-		User userBean;
+		User user;
 		String url = "/main.jsp";
 		
 		command = request.getParameter("command");
@@ -57,28 +59,28 @@ public class BookStoreServlet extends HttpServlet {
 		if (command != null) {
 			if (command.equalsIgnoreCase("CreateUser")) {
 				
-				userBean = updateUser(request, response);
-				userBean.validateUser();
-				if (userBean.isUserValid()) {
-					userDatabaseAccessor.insertUser(userBean);
+				user = createUserFromRequest(request);
+				user.validateUser();
+				if (user.isUserValid()) {
+					userDatabaseAccessor.insertUser(user);
 					url = "/main.jsp";
 				}
 				else {
 					url = "/user_profile.jsp";
 				}
-				request.getSession().setAttribute("userbean", userBean);
+				request.getSession().setAttribute(SESSION_USER, user);
 			}
 			else if (command.equalsIgnoreCase("UpdateUser")) {
-				userBean = updateUser(request, response);
-				userBean.validateUser();
-				if (userBean.isUserValid()) {
-					userDatabaseAccessor.updateUser(userBean);
+				user = createUserFromRequest(request);
+				user.validateUser();
+				if (user.isUserValid()) {
+					userDatabaseAccessor.updateUser(user);
 					url = "/main.jsp";
 				}
 				else {
 					url = "/user_profile.jsp";
 				}
-				request.getSession().setAttribute("userbean", userBean);				
+				request.getSession().setAttribute(SESSION_USER, user);				
 			}
 		}
 		System.out.println("url: " + url);
@@ -89,24 +91,24 @@ public class BookStoreServlet extends HttpServlet {
 		
 	}
 	
-	private User updateUser (HttpServletRequest request, HttpServletResponse response) {
+	private User createUserFromRequest (HttpServletRequest request) {
 		System.out.println("Email: " + request.getParameter("emailAddress"));
 		
-		User userBean = (User) request.getSession().getAttribute("userbean");
-		if(userBean == null) {
-			userBean = new User();
+		User user = (User) request.getSession().getAttribute(SESSION_USER);
+		if(user == null) {
+			user = new User();
 		}
-		userBean.setEmail(request.getParameter("emailAddress"));
-		userBean.setFirstName(request.getParameter("firstName"));
-		userBean.setLastName(request.getParameter("lastName"));
-		userBean.setPassword(request.getParameter("password"));
-		userBean.setAddressFirstLine(request.getParameter("addrFirstLine"));
-		userBean.setAddressSecondLine(request.getParameter("addrSecondLine"));
-		userBean.setCity(request.getParameter("addrCity"));
-		userBean.setState(request.getParameter("addrState"));
-		userBean.setZipcode(request.getParameter("addrZip"));
+		user.setEmail(request.getParameter("emailAddress"));
+		user.setFirstName(request.getParameter("firstName"));
+		user.setLastName(request.getParameter("lastName"));
+		user.setPassword(request.getParameter("password"));
+		user.setAddressFirstLine(request.getParameter("addrFirstLine"));
+		user.setAddressSecondLine(request.getParameter("addrSecondLine"));
+		user.setCity(request.getParameter("addrCity"));
+		user.setState(request.getParameter("addrState"));
+		user.setZipcode(request.getParameter("addrZip"));
 
-		return userBean;
+		return user;
 	}
 
 }
