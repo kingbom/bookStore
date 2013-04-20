@@ -27,7 +27,7 @@ import bookstore.workerbeans.UserDatabaseAccessor;
  * Servlet implementation class BookStoreServlet
  */
 @Component
-@WebServlet(description = "Book Store Servlet for 605.782 Class Project", urlPatterns = { "/BookStoreServlet" })
+@WebServlet(description = "Book Store Servlet for 605.782 Class Project", urlPatterns = { "/BookStoreServlet","/bookstoreservlet","/bookStoreServlet" })
 public class BookStoreServlet extends HttpServlet {
 	
 	private static final String ON_SPECIAL_CMD = "OnSpecial";

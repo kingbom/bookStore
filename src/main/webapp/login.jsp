@@ -14,7 +14,7 @@
 		<tr>
 			<td>
 				<form name="login"
-					action="<%=response.encodeURL("/BookStore/BookStoreServlet")%>"
+					action="<%=response.encodeURL("/bookstore/BookStoreServlet")%>"
 					method="post">
 					<table>
 						<tr>
@@ -33,7 +33,7 @@
 		<tr>
 			<td>
 				<form name="newUser"
-					action="<%=response.encodeURL("/BookStore/user_profile.jsp")%>"
+					action="<%=response.encodeURL("/bookstore/user_profile.jsp")%>"
 					method="post">
 					<input type="hidden" name="command" value="CreateUser" /> <input
 						type="submit" value="Create User">
