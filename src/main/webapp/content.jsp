@@ -4,23 +4,23 @@
 
 <%
 	ArrayList<Book> bookList;
-	if (session.getAttribute("BookList") != null) {
-		bookList = (ArrayList<Book>) session.getAttribute("BookList");
+	if (session.getAttribute("booklist") != null) {
+		bookList = (ArrayList<Book>) session.getAttribute("booklist");
 	} else {
 		bookList = new ArrayList<Book>();
+		
+		Book e = new Book();
+		e.setTitle("Some book");
+		e.setAuthor("Award Winning Author");
+		e.setDescription("asdf dfasd dnfoe asdoifjn nsdoifjaeoijon odjj aosidjf asiod nasdoifio sod fsdj iojdfio daofd x asdf eoi djofjb aodn oeinr eoinsinfd  jsdifjounfbgyd dfasdf sdx jru dasdf.");
+		e.setPageCount(201);
+		e.setPrice(34.99);
+		e.setRating(4.5);
+		e.setCategory(Category.Comedy);
+
+		bookList.add(e);
+		bookList.add(e);
 	}
-
-	Book e = new Book();
-	e.setTitle("Some book");
-	e.setAuthor("Award Winning Author");
-	e.setDescription("asdf dfasd dnfoe asdoifjn nsdoifjaeoijon odjj aosidjf asiod nasdoifio sod fsdj iojdfio daofd x asdf eoi djofjb aodn oeinr eoinsinfd  jsdifjounfbgyd dfasdf sdx jru dasdf.");
-	e.setPageCount(201);
-	e.setPrice(34.99);
-	e.setRating(4.5);
-	e.setCategory(Category.Comedy);
-
-	bookList.add(e);
-	bookList.add(e);
 %>
 
 <%
