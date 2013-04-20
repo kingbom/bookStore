@@ -11,9 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 
 import bookstore.entity.User;
+import bookstore.repository.UserRepository;
+import bookstore.workerbeans.BookDatabaseAccessor;
 import bookstore.workerbeans.UserDatabaseAccessor;
 
 /**
@@ -26,10 +29,43 @@ public class BookStoreServlet extends HttpServlet {
 	public static final String SESSION_USER = "user";
 	private static final long serialVersionUID = 1L;
        
-	@Autowired
+	//@Autowired
 	UserDatabaseAccessor userDatabaseAccessor;
+	BookDatabaseAccessor bookDatabaseAccessor;
 	
-    /**
+	ClassPathXmlApplicationContext springContext;
+	
+    /* (non-Javadoc)
+	 * @see javax.servlet.GenericServlet#init()
+	 */
+	@Override
+	public void init() throws ServletException {
+		super.init();
+		String contextLocation = "WEB-INF/spring/applicationContext.xml";
+		//String contextLocation = "file:src/main/webapp/WEB-INF/spring/applicationContext.xml";
+		springContext = new ClassPathXmlApplicationContext(contextLocation);
+		userDatabaseAccessor=springContext.getBean(UserDatabaseAccessor.class);
+		bookDatabaseAccessor=springContext.getBean(BookDatabaseAccessor.class);
+	}
+	
+	
+
+
+
+	/* (non-Javadoc)
+	 * @see javax.servlet.GenericServlet#destroy()
+	 */
+	@Override
+	public void destroy() {
+		super.destroy();
+		springContext.close();
+	}
+
+
+
+
+
+	/**
      * @see HttpServlet#HttpServlet()
      */
     public BookStoreServlet() {
@@ -49,7 +85,6 @@ public class BookStoreServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		String command;
 		User user;
 		String url = "/main.jsp";

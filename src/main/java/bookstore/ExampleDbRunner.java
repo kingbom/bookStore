@@ -17,7 +17,7 @@ public class ExampleDbRunner {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
+		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("file:src/main/webapp/WEB-INF/spring/applicationContext.xml");
 		repository=ctx.getBean(UserRepository.class);
 		logger.info("Number of users in the db before adding more: " + repository.count());
 		
