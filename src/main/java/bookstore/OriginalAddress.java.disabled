@@ -1,6 +1,6 @@
 package bookstore;
 
-public class Address {
+public class OriginalAddress {
 	private String addrFirstLine="";
 	boolean addrFirstLineMissing = true;
 	private String addrSecondLine="";
@@ -12,10 +12,10 @@ public class Address {
 	private String addrZip="";
 	boolean addrZipMissing = true;
 
-	public Address() {
+	public OriginalAddress() {
 	}
 	
-	public Address (String addrFirstLine, String addrSecondLine, String addrCity,
+	public OriginalAddress (String addrFirstLine, String addrSecondLine, String addrCity,
 			String addrState, String addrZip) {
 		setAddrFirstLine(addrFirstLine);
 		setAddrSecondLine(addrSecondLine);

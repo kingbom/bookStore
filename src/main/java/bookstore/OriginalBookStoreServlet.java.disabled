@@ -10,25 +10,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
-import bookstore.entity.User;
-import bookstore.workerbeans.UserDatabaseAccessor;
-
 /**
  * Servlet implementation class BookStoreServlet
  */
 @WebServlet(description = "Book Store Servlet for 605.782 Class Project", urlPatterns = { "/BookStoreServlet" })
-public class BookStoreServlet extends HttpServlet {
+public class OriginalBookStoreServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-	@Autowired
-	UserDatabaseAccessor userDatabaseAccessor;
-	
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public BookStoreServlet() {
+    public OriginalBookStoreServlet() {
         super();
     }
 
@@ -47,7 +39,7 @@ public class BookStoreServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String command;
-		User userBean;
+		UserBean userBean;
 		String url = "/main.jsp";
 		
 		command = request.getParameter("command");
@@ -60,7 +52,7 @@ public class BookStoreServlet extends HttpServlet {
 				userBean = updateUser(request, response);
 				userBean.validateUser();
 				if (userBean.isUserValid()) {
-					userDatabaseAccessor.insertUser(userBean);
+					userBean.createUser();
 					url = "/main.jsp";
 				}
 				else {
@@ -72,7 +64,7 @@ public class BookStoreServlet extends HttpServlet {
 				userBean = updateUser(request, response);
 				userBean.validateUser();
 				if (userBean.isUserValid()) {
-					userDatabaseAccessor.updateUser(userBean);
+					userBean.updateUser();
 					url = "/main.jsp";
 				}
 				else {
@@ -89,22 +81,22 @@ public class BookStoreServlet extends HttpServlet {
 		
 	}
 	
-	private User updateUser (HttpServletRequest request, HttpServletResponse response) {
+	private UserBean updateUser (HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("Email: " + request.getParameter("emailAddress"));
 		
-		User userBean = (User) request.getSession().getAttribute("userbean");
+		UserBean userBean = (UserBean) request.getSession().getAttribute("userbean");
 		if(userBean == null) {
-			userBean = new User();
+			userBean = new UserBean();
 		}
-		userBean.setEmail(request.getParameter("emailAddress"));
+		userBean.setEmailAddress(request.getParameter("emailAddress"));
 		userBean.setFirstName(request.getParameter("firstName"));
 		userBean.setLastName(request.getParameter("lastName"));
 		userBean.setPassword(request.getParameter("password"));
-		userBean.setAddressFirstLine(request.getParameter("addrFirstLine"));
-		userBean.setAddressSecondLine(request.getParameter("addrSecondLine"));
-		userBean.setCity(request.getParameter("addrCity"));
-		userBean.setState(request.getParameter("addrState"));
-		userBean.setZipcode(request.getParameter("addrZip"));
+		userBean.setAddrFirstLine(request.getParameter("addrFirstLine"));
+		userBean.setAddrSecondLine(request.getParameter("addrSecondLine"));
+		userBean.setAddrCity(request.getParameter("addrCity"));
+		userBean.setAddrState(request.getParameter("addrState"));
+		userBean.setAddrZip(request.getParameter("addrZip"));
 
 		return userBean;
 	}
