@@ -42,5 +42,10 @@ public class BookDatabaseAccessor{
 		List<Book> books = repository.findBookByTitle(keyword);
 		return books;
 	}
+	
+	public Book insertBook(Book bookToSave){
+		Book bookInDb = repository.save(bookToSave);
+		return bookInDb;
+	}
 
 }
