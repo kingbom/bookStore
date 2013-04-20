@@ -20,9 +20,11 @@ public class UserDatabaseAccessor{
 	}
 
 	public User insertUser(User user) {
-
+		System.out.println("There are " + repository.count() + " users in the db.");
+		System.out.println("Inserting User into db");
+		System.out.println("After inserting the user, there are " + repository.count() + " users in the db.");
 		User dbUser = repository.save(user);	
-
+		System.out.println("After inserting the user, there are " + repository.count() + " users in the db.");
 		return dbUser;
 	}
 

@@ -14,7 +14,7 @@
 		</tr>
 		<tr>
 			<td>
-				<form action="/BookStore/BookStoreServlet" method="post">
+				<form action="/bookstore/BookStoreServlet" method="post">
 					<jsp:useBean id="user" scope="session"
 						class="bookstore.entity.User" />
 
