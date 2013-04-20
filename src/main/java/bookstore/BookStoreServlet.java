@@ -1,6 +1,7 @@
 package bookstore;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -13,7 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import bookstore.entity.Book;
+import bookstore.entity.Book.Category;
 import bookstore.entity.User;
+import bookstore.workerbeans.BookDatabaseAccessor;
 import bookstore.workerbeans.UserDatabaseAccessor;
 
 /**
@@ -23,11 +27,26 @@ import bookstore.workerbeans.UserDatabaseAccessor;
 @WebServlet(description = "Book Store Servlet for 605.782 Class Project", urlPatterns = { "/BookStoreServlet" })
 public class BookStoreServlet extends HttpServlet {
 	
+	private static final String ON_SPECIAL_CMD = "OnSpecial";
+	private static final String SEARCH_CMD = "search";
+	private static final String CATEGORY_CMD = "category";
+	private static final String USER_PROFILE_JSP = "/user_profile.jsp";
+	private static final String MAIN_JSP = "/main.jsp";
+
+	private static final String DISPLAY_MAIN_PAGE_CMD = "DisplayMainPage";
+	private static final String UPDATE_USER_CMD = "UpdateUser";
+	private static final String CREATE_USER_CMD = "CreateUser";
+	private static final String COMMAND = "command";
+	
 	public static final String SESSION_USER = "user";
+	public static final String SESSION_LIST = "booklist";
+	
 	private static final long serialVersionUID = 1L;
        
 	@Autowired
 	UserDatabaseAccessor userDatabaseAccessor;
+	@Autowired
+	BookDatabaseAccessor bookDatabaseAccessor;
 	
     /**
      * @see HttpServlet#HttpServlet()
@@ -52,37 +71,48 @@ public class BookStoreServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		String command;
 		User user;
-		String url = "/main.jsp";
+		String url = MAIN_JSP;
 		
-		command = request.getParameter("command");
+		command = request.getParameter(COMMAND);
 		
 		System.out.println("Command: "+ command);
 		
 		if (command != null) {
-			if (command.equalsIgnoreCase("CreateUser")) {
+			if (command.equalsIgnoreCase(CREATE_USER_CMD)) {
 				
 				user = createUserFromRequest(request);
 				user.validateUser();
 				if (user.isUserValid()) {
 					userDatabaseAccessor.insertUser(user);
-					url = "/main.jsp";
+					url = MAIN_JSP;
 				}
 				else {
-					url = "/user_profile.jsp";
+					url = USER_PROFILE_JSP;
 				}
 				request.getSession().setAttribute(SESSION_USER, user);
 			}
-			else if (command.equalsIgnoreCase("UpdateUser")) {
+			else if (command.equalsIgnoreCase(UPDATE_USER_CMD)) {
 				user = createUserFromRequest(request);
 				user.validateUser();
 				if (user.isUserValid()) {
 					userDatabaseAccessor.updateUser(user);
-					url = "/main.jsp";
+					@SuppressWarnings("unchecked")
+					List<Book> list = (List<Book>) request.getSession().getAttribute(SESSION_LIST);
+					if (list == null) {
+						list = bookDatabaseAccessor.getSpecialBooks();
+						request.getSession().setAttribute(SESSION_LIST, list);														
+					}
+					url = MAIN_JSP;
 				}
 				else {
-					url = "/user_profile.jsp";
+					url = USER_PROFILE_JSP;
 				}
 				request.getSession().setAttribute(SESSION_USER, user);				
+			}
+			else if (command.equalsIgnoreCase(DISPLAY_MAIN_PAGE_CMD)) {
+				List<Book> list = getBooksFromRequest (request);
+				url = MAIN_JSP;
+				request.getSession().setAttribute(SESSION_LIST, list);								
 			}
 		}
 		System.out.println("url: " + url);
@@ -111,6 +141,32 @@ public class BookStoreServlet extends HttpServlet {
 		user.setZipcode(request.getParameter("addrZip"));
 
 		return user;
+	}
+	
+	private List<Book> getBooksFromRequest (HttpServletRequest request) {
+		List<Book> list = null;
+		String categoryString;
+		String searchString;
+		Category category;
+		
+		categoryString = request.getParameter(CATEGORY_CMD);
+		searchString = request.getParameter(SEARCH_CMD);
+		
+		if (categoryString != null && !categoryString.isEmpty()) {
+			if (categoryString.equalsIgnoreCase(ON_SPECIAL_CMD)) {
+				list = bookDatabaseAccessor.getSpecialBooks();
+			}
+			
+			else {
+				category = Category.valueOf(categoryString);
+				list = bookDatabaseAccessor.getBooks(category);				
+			}
+		}
+		
+		else if (searchString != null && !searchString.isEmpty()) {
+			list = bookDatabaseAccessor.getBookByKeyword(searchString);
+		}
+		return list;
 	}
 
 }
