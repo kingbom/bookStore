@@ -6,16 +6,26 @@
 <link rel="stylesheet" type="text/css" href="seminar.css">
 <title>BooksRUs</title>
 </head>
+<!-- 
+categories: Comedy, History, Romance, ScienceFiction
+/BookStoreServlet?command=DisplayMainPage&category=Comedy
+command=DisplayMainPage?category=OnSpecial
+command=DisplayMainPage?search=<search string
+booklist all lower case session object> 
+-->
 <body>
-	<table>
+	<table width=800px>
 		<tr>
-			<jsp:include page="./header.jsp" />
+			<td colspan=2><jsp:include page="./header.jsp" /></td>
 		</tr>
 		<tr>
-			<p>Body</p>
+			<td width="150px" valign="top" align="left"><jsp:include page="./leftColumn.jsp" /></td>
+			<td width="650px" valign="top" align="left"><jsp:include page="./content.jsp" /></td>
 		</tr>
 		<tr>
-			<p>Footer</p>
+			<td colspan=2>
+				<p>Footer</p>
+			</td>
 		</tr>
 	</table>
 </body>
