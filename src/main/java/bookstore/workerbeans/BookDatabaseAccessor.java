@@ -21,21 +21,26 @@ public class BookDatabaseAccessor{
 	private BookRepository repository;
 
 	public List<Book> getAllBooks(){
-		return null;
+		List<Book> books = repository.findAll();
+		return books;
 	}
 	public List<Book> getSpecialBooks(){
-		return null;
+		List<Book> books = repository.findBooksByIsSpecial(true);
+		return books;
 	}
 	public List<Book> getBooks(Category category){
-		return null;	
+		List<Book> books =  repository.findBooksByCategory(category);
+		return books;
 	}
 	
 	public Book getBookByIsbn(String ISBN){
-		return null;
+		Book book = repository.findBookByIsbn(ISBN);
+		return book;
 	}
 	
 	public List<Book> getBookByKeyword(String keyword){
-		return null;
+		List<Book> books = repository.findBookByTitle(keyword);
+		return books;
 	}
 
 }
