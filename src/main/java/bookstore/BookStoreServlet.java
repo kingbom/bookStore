@@ -30,12 +30,15 @@ import bookstore.workerbeans.UserDatabaseAccessor;
 @WebServlet(description = "Book Store Servlet for 605.782 Class Project", urlPatterns = { "/BookStoreServlet","/bookstoreservlet","/bookStoreServlet" })
 public class BookStoreServlet extends HttpServlet {
 	
+	private static final String QUANTITY_CMD = "quantity";
+	private static final String UPDATE_CART_QUANTITY_CMD = "UpdateCartQuantity";
+	private static final String REMOVE_FROM_CART_CMD = "RemoveFromCart";
+	private static final String ADD_TO_CART_CMD = "AddToCart";
+	private static final String ISBN_CMD = "ISBN";
 	private static final String ON_SPECIAL_CMD = "OnSpecial";
 	private static final String SEARCH_CMD = "search";
 	private static final String CATEGORY_CMD = "category";
-	private static final String USER_PROFILE_JSP = "/user_profile.jsp";
-	private static final String MAIN_JSP = "/main.jsp";
-
+	
 	private static final String DISPLAY_MAIN_PAGE_CMD = "DisplayMainPage";
 	private static final String UPDATE_USER_CMD = "UpdateUser";
 	private static final String CREATE_USER_CMD = "CreateUser";
@@ -43,6 +46,11 @@ public class BookStoreServlet extends HttpServlet {
 	
 	public static final String SESSION_USER = "user";
 	public static final String SESSION_LIST = "booklist";
+	private static final String SESSION_CART = "cart";
+
+	private static final String USER_PROFILE_JSP = "/user_profile.jsp";
+	private static final String MAIN_JSP = "/main.jsp";
+	private static final String DISPLAY_CART_JSP = "display_cart.jsp";
 	
 	private static final long serialVersionUID = 1L;
        
@@ -80,9 +88,6 @@ public class BookStoreServlet extends HttpServlet {
 	}
 
 
-
-
-
 	/**
      * @see HttpServlet#HttpServlet()
      */
@@ -112,55 +117,94 @@ public class BookStoreServlet extends HttpServlet {
 		System.out.println("Command: "+ command);
 		
 		if (command != null) {
-			if (command.equalsIgnoreCase(CREATE_USER_CMD)) {
-				
+			if (command.equalsIgnoreCase(CREATE_USER_CMD)) {	
 				user = createUserFromRequest(request);
 				user.validateUser();
 				if (user.isUserValid()) {
 					userDatabaseAccessor.insertUser(user);
-					@SuppressWarnings("unchecked")
-					List<Book> list = (List<Book>) request.getSession().getAttribute(SESSION_LIST);
-					if (list == null) {
-						insertBooks();
-						list = bookDatabaseAccessor.getSpecialBooks();
-						request.getSession().setAttribute(SESSION_LIST, list);														
-					}
+					createBookList(request);
 					url = MAIN_JSP;
 				}
+				
 				else {
 					url = USER_PROFILE_JSP;
 				}
-				request.getSession().setAttribute(SESSION_USER, user);
 			}
+			
 			else if (command.equalsIgnoreCase(UPDATE_USER_CMD)) {
 				user = createUserFromRequest(request);
 				user.validateUser();
 				if (user.isUserValid()) {
 					userDatabaseAccessor.updateUser(user);
-					@SuppressWarnings("unchecked")
-					List<Book> list = (List<Book>) request.getSession().getAttribute(SESSION_LIST);
-					if (list == null) {
-						list = bookDatabaseAccessor.getSpecialBooks();
-						request.getSession().setAttribute(SESSION_LIST, list);														
-					}
+					createBookList(request);
 					url = MAIN_JSP;
 				}
 				else {
 					url = USER_PROFILE_JSP;
 				}
-				request.getSession().setAttribute(SESSION_USER, user);				
 			}
+			
 			else if (command.equalsIgnoreCase(DISPLAY_MAIN_PAGE_CMD)) {
-				List<Book> list = getBooksFromRequest (request);
+				getBooksFromRequest (request);
 				url = MAIN_JSP;
-				request.getSession().setAttribute(SESSION_LIST, list);								
 			}
+			else if (command.equalsIgnoreCase(ADD_TO_CART_CMD) ||
+					command.equalsIgnoreCase(REMOVE_FROM_CART_CMD) ||
+					command.equalsIgnoreCase(UPDATE_CART_QUANTITY_CMD)) {
+				updateCartFromRequest(request, command);
+				url = DISPLAY_CART_JSP;
+			}			
 		}
 		System.out.println("url: " + url);
 
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
 		dispatcher.forward(request, response);
 		
+	}
+
+	private void updateCartFromRequest(HttpServletRequest request, String command) {
+		
+		String isbn = null;
+
+		isbn = request.getParameter(ISBN_CMD);
+
+		if (isbn != null && !isbn.isEmpty()) {
+			@SuppressWarnings("unchecked")
+			List<Book> list = (List<Book>) request.getSession().getAttribute(SESSION_LIST);
+			for (Book book : list) {
+				if (book.getIsbn().equalsIgnoreCase(isbn)) {
+					Cart cart = (Cart) request.getSession().getAttribute(SESSION_CART);
+					if (cart == null)
+						cart = new Cart();
+					
+					if (command.equalsIgnoreCase(ADD_TO_CART_CMD))
+						cart.addBookToCart(book);
+					else if (command.equalsIgnoreCase(REMOVE_FROM_CART_CMD))
+						cart.removeBookFromCart(book);
+					else if (command.equalsIgnoreCase(UPDATE_CART_QUANTITY_CMD)) {
+						String qtyString = request.getParameter(QUANTITY_CMD);
+						if (qtyString != null && !qtyString.isEmpty()) {
+							int qty = Integer.parseInt(qtyString);
+							if (qty > 0)
+								cart.updateQuantity(book, qty);
+							else if (qty == 0)
+								cart.removeBookFromCart(book);
+						}
+					}
+					request.getSession().setAttribute(SESSION_CART, cart);
+				}
+			}
+		}
+	}
+
+	private void createBookList(HttpServletRequest request) {
+		@SuppressWarnings("unchecked")
+		List<Book> list = (List<Book>) request.getSession().getAttribute(SESSION_LIST);
+		if (list == null) {
+			insertBooks();
+			list = bookDatabaseAccessor.getSpecialBooks();
+			request.getSession().setAttribute(SESSION_LIST, list);														
+		}
 	}
 	
 	private User createUserFromRequest (HttpServletRequest request) {
@@ -170,6 +214,7 @@ public class BookStoreServlet extends HttpServlet {
 		if(user == null) {
 			user = new User();
 		}
+		
 		user.setEmail(request.getParameter("emailAddress"));
 		user.setFirstName(request.getParameter("firstName"));
 		user.setLastName(request.getParameter("lastName"));
@@ -179,11 +224,12 @@ public class BookStoreServlet extends HttpServlet {
 		user.setCity(request.getParameter("addrCity"));
 		user.setState(request.getParameter("addrState"));
 		user.setZipcode(request.getParameter("addrZip"));
+		request.getSession().setAttribute(SESSION_USER, user);
 
 		return user;
 	}
 	
-	private List<Book> getBooksFromRequest (HttpServletRequest request) {
+	private void getBooksFromRequest (HttpServletRequest request) {
 		List<Book> list = null;
 		String categoryString;
 		String searchString;
@@ -206,7 +252,8 @@ public class BookStoreServlet extends HttpServlet {
 		else if (searchString != null && !searchString.isEmpty()) {
 			list = bookDatabaseAccessor.getBookByKeyword(searchString);
 		}
-		return list;
+		
+		request.getSession().setAttribute(SESSION_LIST, list);								
 	}
 	
 	protected void insertBooks () {
