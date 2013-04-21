@@ -1,5 +1,7 @@
 package bookstore.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,8 +12,9 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
+@SuppressWarnings("serial")
 @Entity
-public class User {
+public class User implements Serializable{
 	public enum UserStatus {
 		NEW, INVALID, VALID, LOGGED_IN
 	};

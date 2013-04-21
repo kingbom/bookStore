@@ -1,13 +1,16 @@
 package bookstore.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 
 
 
+@SuppressWarnings("serial")
 @Entity
-public class Book {
+public class Book implements Serializable{
 	public enum Category{Comedy, History, Romance, ScienceFiction}
 	private String author;
 	Category category;
