@@ -50,7 +50,7 @@ public class BookStoreServlet extends HttpServlet {
 
 	private static final String USER_PROFILE_JSP = "/user_profile.jsp";
 	private static final String MAIN_JSP = "/main.jsp";
-	private static final String DISPLAY_CART_JSP = "display_cart.jsp";
+	private static final String DISPLAY_CART_JSP = "/display_cart.jsp";
 	
 	private static final long serialVersionUID = 1L;
        

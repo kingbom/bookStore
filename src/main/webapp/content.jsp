@@ -9,7 +9,7 @@
 	} else {
 		bookList = new ArrayList<Book>();
 		
-		Book e = new Book();
+		Book e = new Book("521");
 		e.setTitle("Some book");
 		e.setAuthor("Award Winning Author");
 		e.setDescription("asdf dfasd dnfoe asdoifjn nsdoifjaeoijon odjj aosidjf asiod nasdoifio sod fsdj iojdfio daofd x asdf eoi djofjb aodn oeinr eoinsinfd  jsdifjounfbgyd dfasdf sdx jru dasdf.");
@@ -36,7 +36,7 @@
 		<td width=400px>Title: <%=book.getTitle()%> <br> Author: <%=book.getAuthor()%>
 			<br> Description: <%=book.getDescription() %> <br> 
 		</td>
-		<td>Some Picture<br>$<%=book.getPrice() %></td>
+		<td>Some Picture<br>$<%=book.getPrice() %><br><a href="/bookstore/BookStoreServlet?command=AddToCart&ISBN=<%=book.getIsbn()%>">Add to cart</a></td>
 	<tr>
 
 		<%
@@ -45,6 +45,9 @@
 	
 </table>
 <%
-	}
+	} else
+%>
+<p>No results returned</p>
+<%
 	}
 %>
