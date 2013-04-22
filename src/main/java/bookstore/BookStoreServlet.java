@@ -42,15 +42,20 @@ public class BookStoreServlet extends HttpServlet {
 	private static final String DISPLAY_MAIN_PAGE_CMD = "DisplayMainPage";
 	private static final String UPDATE_USER_CMD = "UpdateUser";
 	private static final String CREATE_USER_CMD = "CreateUser";
+	private static final String DISPLAY_CHECKOUT_CMD = "DisplayCheckout";
+	private static final String COMPLETE_CHECKOUT_CMD = "CompleteCheckout";
 	private static final String COMMAND = "command";
 	
 	public static final String SESSION_USER = "user";
 	public static final String SESSION_LIST = "booklist";
-	private static final String SESSION_CART = "cart";
+	public static final String SESSION_CART = "cart";
+	public static final String SESSION_CREDIT_CARD = "creditcard";
 
 	private static final String USER_PROFILE_JSP = "/user_profile.jsp";
 	private static final String MAIN_JSP = "/main.jsp";
 	private static final String DISPLAY_CART_JSP = "/display_cart.jsp";
+	private static final String CONFIRMATION_JSP = "/confirmation.jsp";
+	private static final String CHECKOUT_JSP = "/checkout.jsp";
 	
 	private static final long serialVersionUID = 1L;
        
@@ -110,6 +115,7 @@ public class BookStoreServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String command;
 		User user;
+		CreditCard card;
 		String url = MAIN_JSP;
 		
 		command = request.getParameter(COMMAND);
@@ -153,7 +159,21 @@ public class BookStoreServlet extends HttpServlet {
 					command.equalsIgnoreCase(UPDATE_CART_QUANTITY_CMD)) {
 				updateCartFromRequest(request, command);
 				url = DISPLAY_CART_JSP;
-			}			
+			}
+			
+			else if (command.equalsIgnoreCase(DISPLAY_CHECKOUT_CMD)) {
+				initializeBillingAddress(request);
+				url = CHECKOUT_JSP;
+			}
+			else if (command.equalsIgnoreCase(COMPLETE_CHECKOUT_CMD)) {
+				card = createCardFromRequest(request);
+				card.validateCard();
+				if (card.isCreditCardValid()) {
+					url = CONFIRMATION_JSP;
+				}
+				else
+					url = CHECKOUT_JSP;
+			}
 		}
 		System.out.println("url: " + url);
 
@@ -161,6 +181,50 @@ public class BookStoreServlet extends HttpServlet {
 		dispatcher.forward(request, response);
 		
 	}
+
+
+
+	private void initializeBillingAddress(HttpServletRequest request) {
+		User user;
+		CreditCard card;
+		user = getUserFromSession(request);
+		card = getCreditCardFromSession(request);
+		if (card.isAddressFirstLineMissing())
+			card.setAddressFirstLine(user.getAddressFirstLine());
+		if (card.isAddressSecondLineMissing())
+			card.setAddressSecondLine(user.getAddressSecondLine());
+		if (card.isCityMissing())
+			card.setCity(user.getCity());
+		if (card.isStateMissing())
+			card.setState(user.getState());
+		if (card.isZipcodeMissing())
+			card.setZipcode(user.getZipcode());
+		request.getSession().setAttribute(SESSION_CREDIT_CARD, card);
+	}
+
+	private CreditCard createCardFromRequest(HttpServletRequest request) {
+		CreditCard card = getCreditCardFromSession(request);
+		
+		card.setCardNumber(request.getParameter("cardNumber"));
+		card.setCreditCardType(request.getParameter("creditCardType"));
+		card.setExpMonth(request.getParameter("expMonth"));
+		card.setExpYear(request.getParameter("expYear"));
+		
+		request.getSession().setAttribute(SESSION_CREDIT_CARD, card);
+
+		return card;
+	}
+
+
+	private CreditCard getCreditCardFromSession(HttpServletRequest request) {
+		CreditCard card = (CreditCard) request.getSession().getAttribute(SESSION_CREDIT_CARD);
+		if (card == null)
+			card = new CreditCard();
+		return card;
+	}
+
+
+
 
 	private void updateCartFromRequest(HttpServletRequest request, String command) {
 		
@@ -171,30 +235,41 @@ public class BookStoreServlet extends HttpServlet {
 		if (isbn != null && !isbn.isEmpty()) {
 			@SuppressWarnings("unchecked")
 			List<Book> list = (List<Book>) request.getSession().getAttribute(SESSION_LIST);
-			for (Book book : list) {
-				if (book.getIsbn().equalsIgnoreCase(isbn)) {
-					Cart cart = (Cart) request.getSession().getAttribute(SESSION_CART);
-					if (cart == null)
-						cart = new Cart();
-					
-					if (command.equalsIgnoreCase(ADD_TO_CART_CMD))
-						cart.addBookToCart(book);
-					else if (command.equalsIgnoreCase(REMOVE_FROM_CART_CMD))
-						cart.removeBookFromCart(book);
-					else if (command.equalsIgnoreCase(UPDATE_CART_QUANTITY_CMD)) {
-						String qtyString = request.getParameter(QUANTITY_CMD);
-						if (qtyString != null && !qtyString.isEmpty()) {
-							int qty = Integer.parseInt(qtyString);
-							if (qty > 0)
-								cart.updateQuantity(book, qty);
-							else if (qty == 0)
-								cart.removeBookFromCart(book);
+			if (list != null) {
+				for (Book book : list) {
+					if (book.getIsbn().equalsIgnoreCase(isbn)) {
+						Cart cart = getCartFromSession(request);
+						
+						if (command.equalsIgnoreCase(ADD_TO_CART_CMD))
+							cart.addBookToCart(book);
+						else if (command.equalsIgnoreCase(REMOVE_FROM_CART_CMD))
+							cart.removeBookFromCart(book);
+						else if (command.equalsIgnoreCase(UPDATE_CART_QUANTITY_CMD)) {
+							String qtyString = request.getParameter(QUANTITY_CMD);
+							if (qtyString != null && !qtyString.isEmpty()) {
+								int qty = Integer.parseInt(qtyString);
+								if (qty > 0)
+									cart.updateQuantity(book, qty);
+								else if (qty == 0)
+									cart.removeBookFromCart(book);
+							}
 						}
+						request.getSession().setAttribute(SESSION_CART, cart);
 					}
-					request.getSession().setAttribute(SESSION_CART, cart);
 				}
 			}
 		}
+	}
+
+
+
+
+
+	private Cart getCartFromSession(HttpServletRequest request) {
+		Cart cart = (Cart) request.getSession().getAttribute(SESSION_CART);
+		if (cart == null)
+			cart = new Cart();
+		return cart;
 	}
 
 	private void createBookList(HttpServletRequest request) {
@@ -210,10 +285,7 @@ public class BookStoreServlet extends HttpServlet {
 	private User createUserFromRequest (HttpServletRequest request) {
 		System.out.println("Email: " + request.getParameter("emailAddress"));
 		
-		User user = (User) request.getSession().getAttribute(SESSION_USER);
-		if(user == null) {
-			user = new User();
-		}
+		User user = getUserFromSession(request);
 		
 		user.setEmail(request.getParameter("emailAddress"));
 		user.setFirstName(request.getParameter("firstName"));
@@ -226,6 +298,18 @@ public class BookStoreServlet extends HttpServlet {
 		user.setZipcode(request.getParameter("addrZip"));
 		request.getSession().setAttribute(SESSION_USER, user);
 
+		return user;
+	}
+
+
+
+
+
+	private User getUserFromSession(HttpServletRequest request) {
+		User user = (User) request.getSession().getAttribute(SESSION_USER);
+		if(user == null) {
+			user = new User();
+		}
 		return user;
 	}
 	
