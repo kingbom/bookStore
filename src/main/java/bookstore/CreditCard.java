@@ -5,6 +5,18 @@ public class CreditCard {
 	public enum CreditCardStatus {
 		NEW, INVALID, VALID
 	};
+
+	private String addressFirstLine;
+	private boolean addressFirstLineMissing=true;
+	private String addressSecondLine;
+	private boolean addressSecondLineMissing=true;	
+	private String city;
+	private Boolean cityMissing;
+	private String state;
+	private boolean stateMissing = true;
+	private String zipcode;
+	private boolean zipcodeMissing = true;
+	
 	private String creditCardType = "";
 	private boolean creditCardTypeMissing = true;
 	private String cardNumber ="";
@@ -13,21 +25,29 @@ public class CreditCard {
 	private String expYear = "2013";
 	private boolean expDateMissing = true;
 	private CreditCardStatus cardStatus = CreditCardStatus.NEW;
+	private boolean addressFirsLineMissing;
 
-	public boolean validateCard () {
+	public void validateCard () {
 		
 		if (creditCardTypeMissing ||
 				cardNumberMissing ||
-				expDateMissing) {
+				expDateMissing ||
+				addressFirsLineMissing ||
+				addressSecondLineMissing ||
+				cityMissing ||
+				stateMissing ||
+				zipcodeMissing) {
 			cardStatus = CreditCardStatus.INVALID;
-			return true;
 		}
 		else {
 			cardStatus = CreditCardStatus.VALID;
-			return true;
 		}
 	}
 	
+	public boolean isCreditCardValid () {
+		return (cardStatus == CreditCardStatus.INVALID) ? false : true;
+	}
+
 	public String getCreditCardType() {
 		return creditCardType;
 	}
@@ -79,5 +99,65 @@ public class CreditCard {
 	public boolean isExpDateValid() {
 //todo - check to make sure that the credit card exp date is today's month and year of later
 		return true;
+	}
+
+	public String getAddressFirstLine() {
+		return addressFirstLine;
+	}
+
+	public void setAddressFirstLine(String addressFirstLine) {
+		this.addressFirstLine = addressFirstLine;
+	}
+
+	public String getAddressSecondLine() {
+		return addressSecondLine;
+	}
+
+	public void setAddressSecondLine(String addressSecondLine) {
+		this.addressSecondLine = addressSecondLine;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public String getZipcode() {
+		return zipcode;
+	}
+
+	public void setZipcode(String zipcode) {
+		this.zipcode = zipcode;
+	}
+
+	public boolean isAddressFirstLineMissing() {
+		return (this.cardStatus == CreditCardStatus.NEW) ? false : addressFirstLineMissing;
+	}
+
+	public boolean isAddressSecondLineMissing() {
+		return (this.cardStatus == CreditCardStatus.NEW) ? false : addressSecondLineMissing;
+	}
+	
+	public boolean isCityMissing () {
+		return (this.cardStatus == CreditCardStatus.NEW) ? false : cityMissing;
+	}
+
+	public boolean isStateMissing() {
+		return (this.cardStatus == CreditCardStatus.NEW) ? false : stateMissing;
+	}
+
+	public boolean isZipcodeMissing() {
+		return (this.cardStatus == CreditCardStatus.NEW) ? false : zipcodeMissing;
 	}
 }
