@@ -11,7 +11,7 @@ public class CreditCard {
 	private String addressSecondLine;
 	private boolean addressSecondLineMissing=true;	
 	private String city;
-	private Boolean cityMissing;
+	private Boolean cityMissing=true;
 	private String state;
 	private boolean stateMissing = true;
 	private String zipcode;
@@ -25,14 +25,13 @@ public class CreditCard {
 	private String expYear = "2013";
 	private boolean expDateMissing = true;
 	private CreditCardStatus cardStatus = CreditCardStatus.NEW;
-	private boolean addressFirsLineMissing;
 
 	public void validateCard () {
 		
 		if (creditCardTypeMissing ||
 				cardNumberMissing ||
 				expDateMissing ||
-				addressFirsLineMissing ||
+				addressFirstLineMissing ||
 				addressSecondLineMissing ||
 				cityMissing ||
 				stateMissing ||
@@ -107,6 +106,8 @@ public class CreditCard {
 
 	public void setAddressFirstLine(String addressFirstLine) {
 		this.addressFirstLine = addressFirstLine;
+		this.addressFirstLineMissing = (addressFirstLine == "null" || addressFirstLine.isEmpty()) ? true : false;
+
 	}
 
 	public String getAddressSecondLine() {
@@ -115,6 +116,8 @@ public class CreditCard {
 
 	public void setAddressSecondLine(String addressSecondLine) {
 		this.addressSecondLine = addressSecondLine;
+		this.addressSecondLineMissing = (addressSecondLine == null || addressSecondLine.isEmpty()) ? true : false;
+
 	}
 
 	public String getCity() {
@@ -123,6 +126,8 @@ public class CreditCard {
 
 	public void setCity(String city) {
 		this.city = city;
+		this.cityMissing = (city == null || city.isEmpty()) ? true : false;
+
 	}
 
 	public String getState() {
@@ -131,6 +136,7 @@ public class CreditCard {
 
 	public void setState(String state) {
 		this.state = state;
+		this.stateMissing = (state == null || state.isEmpty()) ? true : false;
 	}
 
 	public String getZipcode() {
@@ -139,6 +145,7 @@ public class CreditCard {
 
 	public void setZipcode(String zipcode) {
 		this.zipcode = zipcode;
+		this.zipcodeMissing = (zipcode == null || zipcode.isEmpty()) ? true : false;
 	}
 
 	public boolean isAddressFirstLineMissing() {
