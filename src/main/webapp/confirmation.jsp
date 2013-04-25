@@ -4,13 +4,15 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>Shopping Cart</title>
+<title>Order Confirmation</title>
 </head>
 <body>
 	<%@ page import="bookstore.Cart"%>
+
+	<%@ page import="bookstore.CreditCard"%>
 	<%@ page import="java.util.Iterator"%>
-	<%@ page import="bookstore.entity.Book"%>
 	<%@ page import="java.util.Map"%>
+	<%@ page import="bookstore.entity.Book"%>
 
 	<%
 		Cart cart = null;
@@ -19,7 +21,11 @@
 			cart = (Cart) session.getAttribute("cart");
 		}
 	%>
+
+	<h2>Items</h2>
 	<table>
+		<jsp:useBean id="card" scope="session" class="bookstore.CreditCard" />
+
 		<tr align="left">
 			<th>Title</th>
 			<th>Price</th>
@@ -37,21 +43,7 @@
 			<td><%=entry.getKey().getPrice()%> <%
  	grandTotal += entry.getKey().getPrice() * entry.getValue();
  %></td>
-			<td>
-				<form
-					action="/bookstore/BookStoreServlet?command=UpdateCartQuantity&ISBN=<%=entry.getKey().getIsbn()%>"
-					method="post">
-					<input type="text" maxlength="5em" size="5"  name="quantity" value="<%=entry.getValue()%>" />
-					<input type="submit" value="Update Qty" />
-				</form>
-			</td>
-			<td>
-				<form
-					action="/bookstore/BookStoreServlet?command=RemoveFromCart&ISBN=<%=entry.getKey().getIsbn()%>"
-					method="post">
-					<input type="submit" value="Remove">
-				</form>
-			</td>
+			<td><%=entry.getValue()%></td>
 		</tr>
 		<%
 			}
@@ -61,12 +53,39 @@
 			<td><%=Math.floor(grandTotal * 100) / 100%></td>
 			<td />
 		</tr>
+	</table>
+	<table>
+		<tr>
+			<h2>Shipping Info</h2>
+		</tr>
+		<tr>
+			<td align="right">Address:</td>
+			<td><jsp:getProperty name="card" property="addressFirstLine" />
+			</td>
+		</tr>
+		<tr>
+			<td align="right">Address(Second Line):</td>
+			<td><jsp:getProperty name="card" property="addressSecondLine" />
+			</td>
+		</tr>
+		<tr>
+
+			<td align="right">City:</td>
+			<td><jsp:getProperty name="card" property="city" /></td>
+		</tr>
+		<tr>
+
+			<td align="right">State:</td>
+			<td><jsp:getProperty name="card" property="state" /></td>
+		</tr>
+		<tr>
+
+			<td align="right">Zip Code:</td>
+			<td><jsp:getProperty name="card" property="zipcode" /></td>
+		</tr>
+
+
 
 	</table>
-	<form action="/bookstore/BookStoreServlet?command=DisplayCheckout" method="post">
-		<input type="submit" value="Checkout"/>
-		
-	</form>
-	<a href="./main.jsp">Continue Shopping</a>
 </body>
 </html>

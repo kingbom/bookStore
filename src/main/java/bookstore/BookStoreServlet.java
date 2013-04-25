@@ -49,7 +49,7 @@ public class BookStoreServlet extends HttpServlet {
 	public static final String SESSION_USER = "user";
 	public static final String SESSION_LIST = "booklist";
 	public static final String SESSION_CART = "cart";
-	public static final String SESSION_CREDIT_CARD = "creditcard";
+	public static final String SESSION_CREDIT_CARD = "card";
 
 	private static final String USER_PROFILE_JSP = "/user_profile.jsp";
 	private static final String MAIN_JSP = "/main.jsp";
@@ -205,6 +205,11 @@ public class BookStoreServlet extends HttpServlet {
 	private CreditCard createCardFromRequest(HttpServletRequest request) {
 		CreditCard card = getCreditCardFromSession(request);
 		
+		card.setAddressFirstLine(request.getParameter("addressFirstLine"));
+		card.setAddressSecondLine(request.getParameter("addressSecondLine"));
+		card.setCity(request.getParameter("city"));
+		card.setState(request.getParameter("state"));
+		card.setZipcode(request.getParameter("zipcode"));
 		card.setCardNumber(request.getParameter("cardNumber"));
 		card.setCreditCardType(request.getParameter("creditCardType"));
 		card.setExpMonth(request.getParameter("expMonth"));
@@ -291,11 +296,11 @@ public class BookStoreServlet extends HttpServlet {
 		user.setFirstName(request.getParameter("firstName"));
 		user.setLastName(request.getParameter("lastName"));
 		user.setPassword(request.getParameter("password"));
-		user.setAddressFirstLine(request.getParameter("addrFirstLine"));
-		user.setAddressSecondLine(request.getParameter("addrSecondLine"));
-		user.setCity(request.getParameter("addrCity"));
-		user.setState(request.getParameter("addrState"));
-		user.setZipcode(request.getParameter("addrZip"));
+		user.setAddressFirstLine(request.getParameter("addressFirstLine"));
+		user.setAddressSecondLine(request.getParameter("addressSecondLine"));
+		user.setCity(request.getParameter("city"));
+		user.setState(request.getParameter("state"));
+		user.setZipcode(request.getParameter("zipcode"));
 		request.getSession().setAttribute(SESSION_USER, user);
 
 		return user;
