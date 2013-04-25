@@ -27,6 +27,22 @@ public class Book implements Serializable{
 
 	private String title;
 	
+	/**
+	 * @return the imageFileName
+	 */
+	public String getImageFileName() {
+		return imageFileName;
+	}
+
+	/**
+	 * @param imageFileName the imageFileName to set
+	 */
+	public void setImageFileName(String imageFileName) {
+		this.imageFileName = imageFileName;
+	}
+
+	private String imageFileName;
+	
 	//No arg constructor needed for JPA
 	public Book(){}
 	
