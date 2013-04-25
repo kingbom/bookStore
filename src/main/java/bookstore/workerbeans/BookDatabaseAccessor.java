@@ -4,8 +4,10 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.QueryParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Component;
 
 import bookstore.entity.Book;
@@ -39,7 +41,7 @@ public class BookDatabaseAccessor{
 	}
 	
 	public List<Book> getBookByKeyword(String keyword){
-		List<Book> books = repository.findBookByTitle(keyword);
+		List<Book> books = repository.findBookByKeyword(keyword);
 		return books;
 	}
 	
