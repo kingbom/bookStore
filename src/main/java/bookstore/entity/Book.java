@@ -180,6 +180,22 @@ public class Book implements Serializable{
 		this.isSpecial = isSpecial;
 	}
 
+	public Book(String title, String author, Double price, Double rating,
+			String isbn, Integer pageCount, Category category,
+			String description, Boolean isSpecial, String imageFileName) {
+		super();
+		this.title = title;
+		this.author = author;
+		this.price = price;
+		this.rating = rating;
+		this.isbn = isbn;
+		this.pageCount = pageCount;
+		this.category = category;
+		this.description = description;
+		this.isSpecial = isSpecial;
+		this.imageFileName = imageFileName;
+	}
+
 	/**
 	 * @return the author
 	 */

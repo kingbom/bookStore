@@ -356,43 +356,43 @@ public class BookStoreServlet extends HttpServlet {
 		Book bookInRepository;
 		
 		Book book1 = new Book ("The Witness", "Nora Roberts", 16.00, 4.5,"00001", 101, Category.Romance,
-				"Life and love catch up with a young woman seeking anonymity in the rural Ozarks.", false);
+				"Life and love catch up with a young woman seeking anonymity in the rural Ozarks.", false, "00001.jpeg");
 		bookInRepository = bookDatabaseAccessor.insertBook(book1);
 		System.out.println(bookInRepository);
 		book1 = new Book ("The Great Gatsby", "F. Scott Fitzgerald", 15.00, 3.6,"00002", 102, Category.Comedy,
-				"The classic American novel of love lost and fortunes gained in the Jazz Age.", true);
+				"The classic American novel of love lost and fortunes gained in the Jazz Age.", true, "00002.jpeg");
 		bookInRepository = bookDatabaseAccessor.insertBook(book1);
 		System.out.println(bookInRepository);
 		book1 = new Book ("The Forgotten", "David Baldacci", 14.99, 2.7,"00003", 103, Category.ScienceFiction,
-				"The death of a beloved aunt leads Army Special Agent John Puller into a dangerous conspiracy.", false);
+				"The death of a beloved aunt leads Army Special Agent John Puller into a dangerous conspiracy.", false,"00003.jpeg");
 		bookInRepository = bookDatabaseAccessor.insertBook(book1);
 		System.out.println(bookInRepository);
 		book1 = new Book ("The Best of Me", "Nicholas Sparks", 14.99, 3.8,"00004", 104, Category.Romance,
-				"A high school couple, separated 25 years later, rekindle their love after a friend’s funeral.", true);
+				"A high school couple, separated 25 years later, rekindle their love after a friend’s funeral.", true, "00004.jpeg");
 		bookInRepository = bookDatabaseAccessor.insertBook(book1);
 		System.out.println(bookInRepository);
 		book1 = new Book ("The Lost Years", "Mary Higgins", 7.99, 4.9,"00005", 105, Category.History,
-				"A scholar discovers a letter written by Jesus. Then the scholar is found dead.", false);
+				"A scholar discovers a letter written by Jesus. Then the scholar is found dead.", false, "00005.jpeg");
 		bookInRepository = bookDatabaseAccessor.insertBook(book1);
 		System.out.println(bookInRepository);
 		book1 = new Book ("Delusion in Death", "J. D. Robb", 7.99, 2.6,"00006", 106, Category.Comedy,
-				"Lt. Eve Dallas investigates the deaths of 80 people.", true);
+				"Lt. Eve Dallas investigates the deaths of 80 people.", true, "00006.jpeg");
 		bookInRepository = bookDatabaseAccessor.insertBook(book1);
 		System.out.println(bookInRepository);
 		book1 = new Book ("The Wanderer", "Robyn Carr", 7.99, 3.9,"00007", 107, Category.Comedy,
-				"A young vagabond inherits an Oregon property, and a community’s future lies in his hands.", true);
+				"A young vagabond inherits an Oregon property, and a community’s future lies in his hands.", true, "00007.jpeg");
 		bookInRepository = bookDatabaseAccessor.insertBook(book1);
 		System.out.println(bookInRepository);
 		book1 = new Book ("Now You See Her", "James Patterson", 10.00, 4.3,"00008", 108, Category.ScienceFiction,
-				"To save an innocent man, a successful New York laywer must admit her life is a sham.", false);
+				"To save an innocent man, a successful New York laywer must admit her life is a sham.", false, "00008.jpeg");
 		bookInRepository = bookDatabaseAccessor.insertBook(book1);
 		System.out.println(bookInRepository);
 		book1 = new Book ("Beautiful Ruins", "Jess Walter", 15.99, 4.7,"00009", 109, Category.Romance,
-				"A love affair that begins on the Italian coast in 1962 is rekindled in Hollywood 50 years later.", true);
+				"A love affair that begins on the Italian coast in 1962 is rekindled in Hollywood 50 years later.", true, "00009.jpeg");
 		bookInRepository = bookDatabaseAccessor.insertBook(book1);
 		System.out.println(bookInRepository);
 		book1 = new Book ("Sand Castle Bay", "Sherryl Woods", 7.99, 3.6,"00010", 110, Category.History,
-				"Two long-separated lovers have a second chance together.", false);
+				"Two long-separated lovers have a second chance together.", false, "00010.jpeg");
 		bookInRepository = bookDatabaseAccessor.insertBook(book1);
 		System.out.println(bookInRepository);
 	}
