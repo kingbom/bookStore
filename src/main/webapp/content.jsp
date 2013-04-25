@@ -36,7 +36,7 @@
 		<td width=400px>Title: <%=book.getTitle()%> <br> Author: <%=book.getAuthor()%>
 			<br> Description: <%=book.getDescription() %> <br> 
 		</td>
-		<td>Some Picture<br>$<%=book.getPrice() %><br><a href="/bookstore/BookStoreServlet?command=AddToCart&ISBN=<%=book.getIsbn()%>">Add to cart</a></td>
+		<td><img src="./resources/images/books/<%=book.getImageFileName() %>"/><br>$<%=book.getPrice() %><br><a href="/bookstore/BookStoreServlet?command=AddToCart&ISBN=<%=book.getIsbn()%>">Add to cart</a></td>
 	<tr>
 
 		<%
