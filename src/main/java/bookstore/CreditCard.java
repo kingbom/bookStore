@@ -96,7 +96,7 @@ public class CreditCard {
 	}
 	
 	public boolean isExpDateValid() {
-//todo - check to make sure that the credit card exp date is today's month and year of later
+//todo - check to make sure that the credit card exp date is today's month and year or later
 		return true;
 	}
 
@@ -166,5 +166,24 @@ public class CreditCard {
 
 	public boolean isZipcodeMissing() {
 		return (this.cardStatus == CreditCardStatus.NEW) ? false : zipcodeMissing;
+	}
+	public boolean isAddressFirstLineEmpty() {
+		return this.addressFirstLineMissing;
+	}
+
+	public boolean isAddressSecondLineEmpty() {
+		return this.addressSecondLineMissing;
+	}
+	
+	public boolean isCityEmpty () {
+		return this.cityMissing;
+	}
+
+	public boolean isStateEmpty() {
+		return this.stateMissing;
+	}
+
+	public boolean isZipcodeEmpty() {
+		return this.zipcodeMissing;
 	}
 }

@@ -30,6 +30,7 @@ import bookstore.workerbeans.UserDatabaseAccessor;
 @WebServlet(description = "Book Store Servlet for 605.782 Class Project", urlPatterns = { "/BookStoreServlet","/bookstoreservlet","/bookStoreServlet" })
 public class BookStoreServlet extends HttpServlet {
 	
+	private static final String CREATE_PROFILE_CMD = "CreateProfile";
 	private static final String QUANTITY_CMD = "quantity";
 	private static final String UPDATE_CART_QUANTITY_CMD = "UpdateCartQuantity";
 	private static final String REMOVE_FROM_CART_CMD = "RemoveFromCart";
@@ -123,7 +124,13 @@ public class BookStoreServlet extends HttpServlet {
 		System.out.println("Command: "+ command);
 		
 		if (command != null) {
-			if (command.equalsIgnoreCase(CREATE_USER_CMD)) {	
+			if (command.equalsIgnoreCase(CREATE_PROFILE_CMD)) {
+				user = new User();
+				request.getSession().setAttribute(SESSION_USER, user);
+				url = USER_PROFILE_JSP;
+			}
+			
+			else if (command.equalsIgnoreCase(CREATE_USER_CMD)) {	
 				user = createUserFromRequest(request);
 				user.validateUser();
 				if (user.isUserValid()) {
@@ -189,15 +196,15 @@ public class BookStoreServlet extends HttpServlet {
 		CreditCard card;
 		user = getUserFromSession(request);
 		card = getCreditCardFromSession(request);
-		if (card.isAddressFirstLineMissing())
+		if (card.isAddressFirstLineEmpty())
 			card.setAddressFirstLine(user.getAddressFirstLine());
-		if (card.isAddressSecondLineMissing())
+		if (card.isAddressSecondLineEmpty())
 			card.setAddressSecondLine(user.getAddressSecondLine());
-		if (card.isCityMissing())
+		if (card.isCityEmpty())
 			card.setCity(user.getCity());
-		if (card.isStateMissing())
+		if (card.isStateEmpty())
 			card.setState(user.getState());
-		if (card.isZipcodeMissing())
+		if (card.isZipcodeEmpty())
 			card.setZipcode(user.getZipcode());
 		request.getSession().setAttribute(SESSION_CREDIT_CARD, card);
 	}
