@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Login</title>
 </head>
 <body>
 	<table>
@@ -13,17 +13,15 @@
 		</tr>
 		<tr>
 			<td>
-				<form name="login"
-					action="<%=response.encodeURL("/bookstore/BookStoreServlet")%>"
-					method="post">
+				<form name="login" action="j_security_check" method="post">
 					<table>
 						<tr>
 							<td align="right">E-Mail Address:</td>
-							<td><input type="text" name="emailAddress" /></td>
+							<td><input type="text" name="j_username" /></td>
 						</tr>
 						<tr>
 							<td align="right">Password:</td>
-							<td><input type="password" name="password" /></td>
+							<td><input type="password" name="j_password" /></td>
 						</tr>
 					</table>
 					<input type="submit" value="Login">
@@ -33,9 +31,9 @@
 		<tr>
 			<td>
 				<form name="newUser"
-					action="<%=response.encodeURL("/bookstore/user_profile.jsp")%>"
+					action="<%=response.encodeURL("/bookstore/BookStoreServlet")%>"
 					method="post">
-					<input type="hidden" name="command" value="CreateUser" /> <input
+					<input type="hidden" name="command" value="CreateProfile" /> <input
 						type="submit" value="Create User">
 				</form>
 			</td>
