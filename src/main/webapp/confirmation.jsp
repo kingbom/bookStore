@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<link rel="stylesheet" type="text/css" href="./resources/bootstrap/css/bootstrap.css">
 <title>Order Confirmation</title>
 </head>
 <body>

@@ -1,14 +1,19 @@
 <%@ page import="bookstore.entity.Book.Category"%>
 <%@ page import="bookstore.entity.Book"%>
+<%@ page import="java.text.DecimalFormat" %>
 <%@ page import="java.util.ArrayList;"%>
 
 <%
+	DecimalFormat df = new DecimalFormat();
+	df.setMinimumFractionDigits(2);
+	df.setMaximumFractionDigits(2);
+
 	ArrayList<Book> bookList;
 	if (session.getAttribute("booklist") != null) {
 		bookList = (ArrayList<Book>) session.getAttribute("booklist");
 	} else {
 		bookList = new ArrayList<Book>();
-		
+
 		Book e = new Book("521");
 		e.setTitle("Some book");
 		e.setAuthor("Award Winning Author");
@@ -33,10 +38,15 @@
 		for (Book book : bookList) {
 	%>
 	<tr>
-		<td width=400px>Title: <%=book.getTitle()%> <br> Author: <%=book.getAuthor()%>
-			<br> Description: <%=book.getDescription() %> <br> 
+		<td width=400px valign="top"><h5><%=book.getTitle()%></h5><h6><%=book.getAuthor()%></h6>
+			<p> <%=book.getDescription()%> </p><br>
 		</td>
-		<td><img src="./resources/images/books/<%=book.getImageFileName() %>"/><br>$<%=book.getPrice() %><br><a href="/bookstore/BookStoreServlet?command=AddToCart&ISBN=<%=book.getIsbn()%>">Add to cart</a></td>
+		<td align="center"><img
+			src="./resources/images/books/<%=book.getImageFileName()%>" /><br>$<%=df.format(book.getPrice()) %><br>
+		<form action="/bookstore/BookStoreServlet?command=AddToCart&ISBN=<%=book.getIsbn()%>" method="post">
+			<input type="submit"
+			
+			value="Add to cart"></input></form></td>
 	<tr>
 
 		<%
@@ -45,9 +55,6 @@
 	
 </table>
 <%
-	} else
-%>
-<p>No results returned</p>
-<%
+	}
 	}
 %>
