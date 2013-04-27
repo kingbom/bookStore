@@ -61,5 +61,11 @@ public class TestUserRepository {
 		User retreivedUser = repository.findUserByEmailIgnoreCaseAndPassword(john.getEmail(), john.getPassword());
 		assertThat(retreivedUser, equalTo(john));
 	}
+	
+	@Test
+	public void testThatJohnCanBeFoundByEmail(){
+		User retreivedUser = repository.findUserByEmailIgnoreCase(john.getEmail());
+		assertThat(retreivedUser, equalTo(john));
+	}
 
 }

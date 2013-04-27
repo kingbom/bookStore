@@ -18,6 +18,10 @@ public class UserDatabaseAccessor{
 	public User getUser(String email, String password) {
 		return repository.findUserByEmailIgnoreCaseAndPassword(email, password);
 	}
+	
+	public User getUser(String email) {
+		return repository.findUserByEmailIgnoreCase(email);
+	}
 
 	public User insertUser(User user) {
 		System.out.println("There are " + repository.count() + " users in the db.");
