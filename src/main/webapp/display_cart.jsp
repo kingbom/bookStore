@@ -34,7 +34,7 @@
 			<td width="150px" valign="top" align="left"><jsp:include
 					page="./leftColumn.jsp" /></td>
 			<td width="650px" valign="top" align="left">
-
+				<h4>Shopping Cart</h4>
 				<table class="shoppingCart">
 					<tr align="left">
 						<th width="150px">Title</th>

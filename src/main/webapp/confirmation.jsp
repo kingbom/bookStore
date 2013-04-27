@@ -25,6 +25,10 @@
 		}
 	%>
 	<jsp:include page="./header.jsp" />
+	
+	<h4>Order Confirmation</h4>
+	<p>Thank you for shopping with us!</p>
+	<p>Your order contains the following item(s):</p>
 
 	<h4>Items</h4>
 	<table>
@@ -87,9 +91,7 @@
 			<td align="right">Zip Code:</td>
 			<td><jsp:getProperty name="card" property="zipcode" /></td>
 		</tr>
-
-
-
+		
 	</table>
 </body>
 </html>
