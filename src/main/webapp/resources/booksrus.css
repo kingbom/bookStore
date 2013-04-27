@@ -22,3 +22,16 @@
 	max-width:150px;
 	max-height:150px;
 }
+
+#shoppingCart td {
+	
+	
+}
+
+#shoppingCart input[type="text"] {
+	size:2em;
+}
+
+warn {
+	color:red;
+}

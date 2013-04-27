@@ -4,7 +4,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<link rel="stylesheet" type="text/css" href="./resources/bootstrap/css/bootstrap.css">
+<link rel="stylesheet" type="text/css"
+	href="./resources/bootstrap/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="./resources/booksrus.css">
 <title>Order Confirmation</title>
 </head>
 <body>
@@ -22,8 +24,9 @@
 			cart = (Cart) session.getAttribute("cart");
 		}
 	%>
+	<jsp:include page="./header.jsp" />
 
-	<h2>Items</h2>
+	<h4>Items</h4>
 	<table>
 		<jsp:useBean id="card" scope="session" class="bookstore.CreditCard" />
 
@@ -57,7 +60,7 @@
 	</table>
 	<table>
 		<tr>
-			<h2>Shipping Info</h2>
+			<h4>Shipping Info</h4>
 		</tr>
 		<tr>
 			<td align="right">Address:</td>

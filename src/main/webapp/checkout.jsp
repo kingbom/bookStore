@@ -4,7 +4,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<link rel="stylesheet" type="text/css" href="./resources/bootstrap/css/bootstrap.css">
+<link rel="stylesheet" type="text/css"
+	href="./resources/bootstrap/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="./resources/booksrus.css">
 <title>Checkout</title>
 </head>
 <body>
@@ -109,7 +111,7 @@
                       property="cardNumber"/>">
 				</td>
 			</tr>
-						<tr>
+			<tr>
 
 				<td align="right">
 					<%
@@ -123,7 +125,7 @@
                       property="expMonth"/>">
 				</td>
 			</tr>
-						<tr>
+			<tr>
 
 				<td align="right">
 					<%
@@ -141,7 +143,7 @@
 
 		<input type="submit" value="Complete Checkout" /> <input
 			type="hidden" name="command" value="CompleteCheckout" />
-			
+
 
 	</form>
 </body>
