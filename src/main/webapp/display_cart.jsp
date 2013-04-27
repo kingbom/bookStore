@@ -80,7 +80,7 @@
 					</tr>
 
 				</table>
-				<form action="/bookstore/BookStoreServlet?command=DisplayCheckout"
+				<form action="/bookstore/LoginCheckoutServlet"
 					method="post">
 					<input type="submit" value="Checkout" />
 

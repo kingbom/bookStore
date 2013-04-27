@@ -53,10 +53,10 @@ public class BookStoreServlet extends HttpServlet {
 	public static final String SESSION_CREDIT_CARD = "card";
 
 	private static final String USER_PROFILE_JSP = "/user_profile.jsp";
-	private static final String MAIN_JSP = "/main.jsp";
+	protected static final String MAIN_JSP = "/main.jsp";
 	private static final String DISPLAY_CART_JSP = "/display_cart.jsp";
 	private static final String CONFIRMATION_JSP = "/confirmation.jsp";
-	private static final String CHECKOUT_JSP = "/checkout.jsp";
+	protected static final String CHECKOUT_JSP = "/checkout.jsp";
 	
 	private static final long serialVersionUID = 1L;
        

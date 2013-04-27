@@ -14,7 +14,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td><a href="./login.jsp">Login</a> |
+					<td><a href="./LoginServlet">Login</a> |
 					<a href="./display_cart.jsp">Cart</a> | <a href="./user_profile.jsp">My Profile</a>
 					</td>
 			</tr>
