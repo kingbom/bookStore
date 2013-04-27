@@ -1,8 +1,16 @@
+<%@ page import="bookstore.entity.User;"%>
 <table width="800px" border="0" cellspacing="0" cellpadding="0">
 	<tr>
-		<td width=200px><img id="mainLogo" src="./resources/images/booksrus.jpg" /></td>
-		<td width=300px></td>
-		<td width=300px valign="top">
+		<td width=200px><img id="mainLogo"
+			src="./resources/images/booksrus.jpg" /></td>
+		<td width=250px></td>
+		<td width=250px valign="top">
+			<%
+				User user = null;
+				if (session.getAttribute("user") != null) {
+					user = (User) session.getAttribute("user");
+				}
+			%>
 			<table>
 				<tr>
 					<td>
@@ -14,10 +22,36 @@
 					</td>
 				</tr>
 				<tr>
-					<td><a href="./LoginServlet">Login</a> |
-					<a href="./display_cart.jsp">Cart</a> | <a href="./user_profile.jsp">My Profile</a>
+					<td>
+						<%
+							if (user != null) {
+								if (user.isUserLoggedIn()) {
+						%> Logged in as <%=user.getEmail()%> <%
+ 	} else {
+ %> <%
+ 	}
+ 	} else {
+ %> <%
+ 	}
+ %>
 					</td>
-			</tr>
+				</tr>
+				<tr>
+					<td>
+						<%
+							if (user != null) {
+								if (user.isUserLoggedIn()) {
+						%> <a href="./LoginServlet">Log out</a> <%
+ 	} else {
+ %> <a href="./LoginServlet">Log in</a> <%
+ 	}
+ 	} else {
+ %><a href="./LoginServlet">Log in</a> <%
+ 	}
+ %> | <a href="./display_cart.jsp">Cart</a> | <a
+						href="./user_profile.jsp">My Profile</a>
+					</td>
+				</tr>
 			</table>
 		</td>
 	</tr>
