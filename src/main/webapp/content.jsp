@@ -1,6 +1,6 @@
 <%@ page import="bookstore.entity.Book.Category"%>
 <%@ page import="bookstore.entity.Book"%>
-<%@ page import="java.text.DecimalFormat" %>
+<%@ page import="java.text.DecimalFormat"%>
 <%@ page import="java.util.ArrayList;"%>
 
 <%
@@ -38,15 +38,22 @@
 		for (Book book : bookList) {
 	%>
 	<tr>
-		<td width=400px valign="top"><h5><%=book.getTitle()%></h5><h6><%=book.getAuthor()%></h6>
-			<p> <%=book.getDescription()%> </p><br>
-		</td>
-		<td align="center"><img
-			src="./resources/images/books/<%=book.getImageFileName()%>" /><br>$<%=df.format(book.getPrice()) %><br>
-		<form action="/bookstore/BookStoreServlet?command=AddToCart&ISBN=<%=book.getIsbn()%>" method="post">
-			<input type="submit"
+		<td width=400px valign="top"><span class="price">$<%=df.format(book.getPrice())%></span><h5><%=book.getTitle()%></h5>
+			<h6><%=book.getAuthor()%></h6>
+			<p>
+				<%=book.getDescription()%>
+			</p>
+			<br></td>
+		<td align="center" valign="top"><div><img class="bookImage"
+			src="./resources/images/books/<%=book.getImageFileName()%>" /><br><span class="price"></span><br>
+			<form
+				action="/bookstore/BookStoreServlet?command=AddToCart&ISBN=<%=book.getIsbn()%>"
+				method="post">
+				<input type="submit" value="Add to cart"></input>
+			</form>
+			</div>
+			</td>
 			
-			value="Add to cart"></input></form></td>
 	<tr>
 
 		<%
@@ -54,6 +61,10 @@
 		%>
 	
 </table>
+<%
+	} else {
+%>
+	<h5>No results found</h5>
 <%
 	}
 	}

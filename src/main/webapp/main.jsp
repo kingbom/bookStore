@@ -4,6 +4,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="./resources/bootstrap/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="./resources/booksrus.css">
+
 <title>BooksRUs</title>
 </head>
 <!-- 
@@ -16,7 +18,7 @@ booklist all lower case session object>
 <body>
 	<table width=800px>
 		<tr>
-			<td colspan=2><jsp:include page="./header.jsp" /></td>
+			<td colspan=2><jsp:include page="./header.jsp" /><br/></td>
 		</tr>
 		<tr>
 			<td width="150px" valign="top" align="left"><jsp:include page="./leftColumn.jsp" /></td>

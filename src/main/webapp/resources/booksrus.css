@@ -1,0 +1,24 @@
+.price {
+	color:red;
+	position: absolute; 
+	left:500px;
+	padding-top:5px;
+	font-weight: bold;
+}
+
+#mainLogo {
+  float:left;
+  width: auto;
+  height: auto;
+  display:block;
+  max-width: 200px;
+  vertical-align: middle;
+  border: 0;
+  -ms-interpolation-mode: bicubic;	
+}
+
+.bookImage {
+	position:float;
+	max-width:150px;
+	max-height:150px;
+}
