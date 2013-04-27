@@ -20,9 +20,18 @@
 			<td width="150px" valign="top" align="left"><jsp:include
 					page="./leftColumn.jsp" /></td>
 			<td width="650px" valign="top" align="left">
-			<h4>Billing Information</h4>
+				<h4>Billing Information</h4>
 				<form action="/bookstore/BookStoreServlet">
 					<jsp:useBean id="card" scope="session" class="bookstore.CreditCard" />
+					<%
+						if (!card.isCreditCardValid()) {
+					%>
+					<h5>
+						<warn>Please fill in required fields</warn>
+					</h5>
+					<%
+						}
+					%>
 					<table>
 						<tr>
 							<td align="right">
@@ -41,9 +50,10 @@
 							<td align="right">
 								<%
 									if (card.isAddressSecondLineMissing()) {
-								%>Address(Second Line): <%
+								%><warn>*</warn><%
 									}
 								%>
+								Address(Second Line): 
 							</td>
 							<td><input type="text" name="addressSecondLine"
 								value="<jsp:getProperty name="card"

@@ -6,20 +6,20 @@ public class CreditCard {
 		NEW, INVALID, VALID
 	};
 
-	private String addressFirstLine;
+	private String addressFirstLine = "";
 	private boolean addressFirstLineMissing=true;
-	private String addressSecondLine;
+	private String addressSecondLine = "";
 	private boolean addressSecondLineMissing=true;	
-	private String city;
+	private String city = "";
 	private Boolean cityMissing=true;
-	private String state;
+	private String state = "";
 	private boolean stateMissing = true;
-	private String zipcode;
+	private String zipcode = "";
 	private boolean zipcodeMissing = true;
 	
 	private String creditCardType = "";
 	private boolean creditCardTypeMissing = true;
-	private String cardNumber ="";
+	private String cardNumber = "";
 	private boolean cardNumberMissing = true;
 	private String expMonth = "January";
 	private String expYear = "2013";

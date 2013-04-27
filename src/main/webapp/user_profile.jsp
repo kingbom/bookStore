@@ -40,7 +40,7 @@
 									<tr>
 										<td align="right">
 											<%
-												if (user.getFirstName() == "") {
+												if (user.getUserStatus().equals(UserStatus.INVALID) && user.getFirstName() == "") {
 											%> <warn>*</warn> <%
  	}
  %>First name:
@@ -53,7 +53,7 @@
 									<tr>
 										<td align="right">
 											<%
-												if (user.getLastName() == "") {
+												if (user.getUserStatus().equals(UserStatus.INVALID) && user.getLastName() == "") {
 											%> <warn>*</warn> <%
  	}
  %>Last name:
@@ -67,7 +67,7 @@
 
 										<td align="right">
 											<%
-												if (user.getEmail() == "") {
+												if (user.getUserStatus().equals(UserStatus.INVALID) && user.getEmail() == "") {
 											%> <warn>*</warn> <%
  	}
  %>E-mail:
@@ -121,7 +121,7 @@
 									</tr>
 								</table>
 								<%
-									if (user.getId() != null) {
+									if (user.isUserLoggedIn()) {
 								%>
 								<input type="submit" value="Update User" /> <input
 									type="hidden" name="command" value="UpdateUser" />
