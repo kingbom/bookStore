@@ -19,35 +19,35 @@ public class User implements Serializable{
 		NEW, INVALID, VALID, LOGGED_IN
 	};
 	
-	private String addressFirstLine;
+	private String addressFirstLine = "";
 	private boolean addressFirstLineMissing=true;
-	private String addressSecondLine;
+	private String addressSecondLine = "";
 	private boolean addressSecondLineMissing=true;
 	
-	private String city;
+	private String city = "";
 	private Boolean cityMissing;
 	
 	//@Column(unique = true)
 	//@Email
-	private String email;
+	private String email = "";
 	boolean emailAddressDupl = true;
 	boolean emailAddressMissing = true;
 	//@NotEmpty
-	private String firstName;
+	private String firstName = "";
 	boolean firstNameMissing = true;
 	@javax.persistence.Id
 	@GeneratedValue
 	private Long Id;
 	//@NotEmpty
-	private String lastName;
+	private String lastName = "";
 	boolean lastNameMissing = true;
 	//@NotEmpty
-	private String password;
+	private String password = "";
 	boolean passwordMissing = true;
-	private String state;
+	private String state = "";
 	private boolean stateMissing = true;
 	private UserStatus userStatus = UserStatus.NEW;
-	private String zipcode;
+	private String zipcode = "";
 	private boolean zipcodeMissing = true;
 	
 	//No arg constructor needed for jpa

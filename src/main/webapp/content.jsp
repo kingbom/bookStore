@@ -45,7 +45,7 @@
 			</p>
 			<br></td>
 		<td align="center" valign="top"><div><img class="bookImage"
-			src="./resources/images/books/<%=book.getImageFileName()%>" /><br><span class="price"></span><br>
+			src="./resources/images/books/<%=book.getImageFileName()%>" /><br/>
 			<form
 				action="/bookstore/BookStoreServlet?command=AddToCart&ISBN=<%=book.getIsbn()%>"
 				method="post">

@@ -23,13 +23,17 @@
 	max-height:150px;
 }
 
-#shoppingCart td {
-	
-	
+.shoppingCart td,th {
+	align:left;
+	padding-right:10px;
 }
 
-#shoppingCart input[type="text"] {
-	size:2em;
+.shoppingCart input[type="text"] {
+	width:3em;
+}
+
+.shoppingCart input[type="submit"] {
+	margin-left: 10px;
 }
 
 warn {

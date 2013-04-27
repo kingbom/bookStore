@@ -1,3 +1,4 @@
+<%@page import="bookstore.entity.User.UserStatus"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -20,6 +21,7 @@
 			<td width="150px" valign="top" align="left"><jsp:include
 					page="./leftColumn.jsp" /></td>
 			<td width="650px" valign="top" align="left">
+				<h4>User Profile</h4>
 				<table>
 					<tr>
 						<td>
@@ -27,7 +29,13 @@
 								<jsp:useBean id="user" scope="session"
 									class="bookstore.entity.User" />
 
-
+								<%
+									if (user.getUserStatus().equals(UserStatus.INVALID)) {
+								%>
+									<h5><warn>Please fill in required fields</warn></h5>
+								<%
+									}
+								%>
 								<table>
 									<tr>
 										<td align="right">
@@ -64,7 +72,7 @@
  	}
  %>E-mail:
 										</td>
-										<td><input type="e-mail" name="emailAddress"
+										<td><input type="email" name="emailAddress"
 											value="<jsp:getProperty name="user"
                       property="email"/>">
 										</td>

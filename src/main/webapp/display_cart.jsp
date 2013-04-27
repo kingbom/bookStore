@@ -13,16 +13,20 @@
 	<%@ page import="bookstore.Cart"%>
 	<%@ page import="java.util.Iterator"%>
 	<%@ page import="bookstore.entity.Book"%>
+	<%@ page import="java.text.DecimalFormat" %>
 	<%@ page import="java.util.Map"%>
 
 	<%
+		DecimalFormat df = new DecimalFormat();
+		df.setMinimumFractionDigits(2);
+		df.setMaximumFractionDigits(2);
+
 		Cart cart = null;
 
 		if (session.getAttribute("cart") != null) {
 			cart = (Cart) session.getAttribute("cart");
-		
 	%>
-	<table width=800px class="shoppingCart">
+	<table width=800px>
 		<tr>
 			<td colspan=2><jsp:include page="./header.jsp" /><br /></td>
 		</tr>
@@ -31,22 +35,22 @@
 					page="./leftColumn.jsp" /></td>
 			<td width="650px" valign="top" align="left">
 
-				<table>
+				<table class="shoppingCart">
 					<tr align="left">
-						<th>Title</th>
-						<th>Price</th>
-						<th>Quantity</th>
+						<th width="150px">Title</th>
+						<th width="50px">Price</th>
+						<th width="170px">Quantity</th>
 					</tr>
 					<%
 						Double grandTotal = 0.0;
-						Iterator<Map.Entry<Book, Integer>> bookIterator = cart
-								.getIterator();
-						while (bookIterator.hasNext()) {
-							Map.Entry<Book, Integer> entry = bookIterator.next();
+							Iterator<Map.Entry<Book, Integer>> bookIterator = cart
+									.getIterator();
+							while (bookIterator.hasNext()) {
+								Map.Entry<Book, Integer> entry = bookIterator.next();
 					%>
 					<tr>
 						<td><%=entry.getKey().getTitle()%></td>
-						<td><%=entry.getKey().getPrice()%> <%
+						<td>$<%=df.format(entry.getKey().getPrice())%> <%
  	grandTotal += entry.getKey().getPrice() * entry.getValue();
  %></td>
 						<td>
@@ -71,7 +75,7 @@
 					%>
 					<tr>
 						<td />
-						<td><%=Math.floor(grandTotal * 100) / 100%></td>
+						<td>$<%=df.format(cart.getTotal())%></td>
 						<td />
 					</tr>
 
@@ -94,13 +98,15 @@
 	<%
 		} else {
 	%>
-		<table width=800px>
+	<table width=800px>
 		<tr>
-			<td colspan=2><jsp:include page="./header.jsp" /><br/></td>
+			<td colspan=2><jsp:include page="./header.jsp" /><br /></td>
 		</tr>
 		<tr>
-			<td width="150px" valign="top" align="left"><jsp:include page="./leftColumn.jsp" /></td>
-			<td width="650px" valign="top" align="left"><h4>No items in cart</h4></td>
+			<td width="150px" valign="top" align="left"><jsp:include
+					page="./leftColumn.jsp" /></td>
+			<td width="650px" valign="top" align="left"><h4>No items in
+					cart</h4></td>
 		</tr>
 		<tr>
 			<td colspan=2>
@@ -108,8 +114,10 @@
 			</td>
 		</tr>
 	</table>
-		
-	<% } %>
+
+	<%
+		}
+	%>
 
 </body>
 </html>
