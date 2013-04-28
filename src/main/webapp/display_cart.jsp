@@ -13,7 +13,7 @@
 	<%@ page import="bookstore.Cart"%>
 	<%@ page import="java.util.Iterator"%>
 	<%@ page import="bookstore.entity.Book"%>
-	<%@ page import="java.text.DecimalFormat" %>
+	<%@ page import="java.text.DecimalFormat"%>
 	<%@ page import="java.util.Map"%>
 
 	<%
@@ -54,18 +54,18 @@
  	grandTotal += entry.getKey().getPrice() * entry.getValue();
  %></td>
 						<td>
-							<form
-								action="/bookstore/BookStoreServlet?command=UpdateCartQuantity&ISBN=<%=entry.getKey().getIsbn()%>"
-								method="post">
+							<form action="/bookstore/BookStoreServlet" method="get">
 								<input type="text" maxlength="5em" size="5" name="quantity"
 									value="<%=entry.getValue()%>" /> <input type="submit"
-									value="Update Qty" />
+									value="Update Qty" /> <input type="hidden" name="command"
+									value="UpdateCartQuantity" /> <input type="hidden" name="ISBN"
+									value="<%=entry.getKey().getIsbn()%>" />
 							</form>
 						</td>
 						<td>
-							<form
-								action="/bookstore/BookStoreServlet?command=RemoveFromCart&ISBN=<%=entry.getKey().getIsbn()%>"
-								method="post">
+							<form action="/bookstore/BookStoreServlet" method="get">
+								<input type="hidden" name="command" value="RemoveFromCart" /> <input
+									type="hidden" name="ISBN" value="<%=entry.getKey().getIsbn()%>" />
 								<input type="submit" value="Remove">
 							</form>
 						</td>
@@ -80,11 +80,10 @@
 					</tr>
 
 				</table>
-				<form action="/bookstore/LoginCheckoutServlet"
-					method="post">
+				<form action="/bookstore/LoginCheckoutServlet" method="post">
 					<input type="submit" value="Checkout" />
 
-				</form> <a href="./main.jsp">Continue Shopping</a>
+				</form>
 
 
 			</td>

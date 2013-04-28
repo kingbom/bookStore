@@ -36,6 +36,10 @@
 	margin-left: 10px;
 }
 
+.bookList tr {
+	border-bottom:25px white solid;
+}
+
 warn {
 	color:red;
 }
