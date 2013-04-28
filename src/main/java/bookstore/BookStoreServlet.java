@@ -33,6 +33,8 @@ import bookstore.workerbeans.UserDatabaseAccessor;
 @WebServlet(description = "Book Store Servlet for 605.782 Class Project", urlPatterns = { "/BookStoreServlet","/bookstoreservlet","/bookStoreServlet" })
 public class BookStoreServlet extends HttpServlet {
 	
+	private static final String NEW_CART_CMD = "NewCart";
+	private static final String LOGOUT_CMD = "Logout";
 	private static final String CREATE_PROFILE_CMD = "CreateProfile";
 	private static final String QUANTITY_CMD = "quantity";
 	private static final String UPDATE_CART_QUANTITY_CMD = "UpdateCartQuantity";
@@ -194,6 +196,19 @@ public class BookStoreServlet extends HttpServlet {
 				else
 					url = CHECKOUT_JSP;
 			}
+			
+			else if (command.equalsIgnoreCase(LOGOUT_CMD)) {
+				request.getSession().invalidate();
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(MAIN_JSP);
+				dispatcher.forward(request, response);						
+			}
+
+			else if (command.equalsIgnoreCase(NEW_CART_CMD)) {				
+				request.getSession().setAttribute(SESSION_CART, new Cart());
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(MAIN_JSP);
+				dispatcher.forward(request, response);						
+			}
+
 		}
 		System.out.println("url: " + url);
 
