@@ -32,7 +32,7 @@
 	if (bookList != null) {
 		if (bookList.isEmpty() == false) {
 %>
-<table>
+<table class="bookList">
 
 	<%
 		for (Book book : bookList) {
@@ -54,7 +54,7 @@
 			</div>
 			</td>
 			
-	<tr>
+	</tr>
 
 		<%
 			}

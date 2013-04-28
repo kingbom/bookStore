@@ -1,8 +1,11 @@
 package bookstore;
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
+import javax.mail.MessagingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -59,6 +62,11 @@ public class BookStoreServlet extends HttpServlet {
 	protected static final String CHECKOUT_JSP = "/checkout.jsp";
 	
 	private static final long serialVersionUID = 1L;
+	private static final String EMAIL_FROM_ADDRESS="mbuck1@jhu.edu";
+	private static final String EMAIL_SUBJECT = "BooksrUs Purchase Confirmation";
+	private static String EMAIL_BODY1 = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">" +
+			"<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=US-ASCII\">" +
+			"<title>BooksrUs Purchase Confirmation</title></head><body>Confirmation Email Body</body></html>";
        
 	//@Autowired
 	UserDatabaseAccessor userDatabaseAccessor;
@@ -161,8 +169,12 @@ public class BookStoreServlet extends HttpServlet {
 				getBooksFromRequest (request);
 				url = MAIN_JSP;
 			}
-			else if (command.equalsIgnoreCase(ADD_TO_CART_CMD) ||
-					command.equalsIgnoreCase(REMOVE_FROM_CART_CMD) ||
+			else if (command.equalsIgnoreCase(ADD_TO_CART_CMD)) {
+				addToCartFromRequest(request, command);
+				url = DISPLAY_CART_JSP;
+			}
+			
+			else if (command.equalsIgnoreCase(REMOVE_FROM_CART_CMD) ||
 					command.equalsIgnoreCase(UPDATE_CART_QUANTITY_CMD)) {
 				updateCartFromRequest(request, command);
 				url = DISPLAY_CART_JSP;
@@ -176,6 +188,7 @@ public class BookStoreServlet extends HttpServlet {
 				card = createCardFromRequest(request);
 				card.validateCard();
 				if (card.isCreditCardValid()) {
+//					sendConfirmationEmailFromRequest(request);
 					url = CONFIRMATION_JSP;
 				}
 				else
@@ -188,6 +201,32 @@ public class BookStoreServlet extends HttpServlet {
 		dispatcher.forward(request, response);
 		
 	}
+
+
+
+	private void sendConfirmationEmailFromRequest(HttpServletRequest request) {
+		User user;
+		CreditCard card;
+		Cart cart;
+		String toEmailAddress;
+		StringBuffer emailBody;
+
+		user = getUserFromSession(request);
+		card = getCreditCardFromSession(request);
+		cart = getCartFromSession(request);
+		
+		toEmailAddress = user.getEmail();
+		emailBody = new StringBuffer(EMAIL_BODY1);
+		System.out.println("Sending email to: " + toEmailAddress);
+	
+		try {
+			MailUtilAuth.sendMail(toEmailAddress, EMAIL_FROM_ADDRESS, EMAIL_SUBJECT, emailBody.toString(), true);
+		} catch (MessagingException e) {
+			System.out.println("Messaging exception: " + e.getMessage());
+		}		
+	}
+
+
 
 
 
@@ -243,30 +282,60 @@ public class BookStoreServlet extends HttpServlet {
 		String isbn = null;
 
 		isbn = request.getParameter(ISBN_CMD);
+		Cart cart = getCartFromSession(request);
+		Book book;
 
 		if (isbn != null && !isbn.isEmpty()) {
+			System.out.println("Trying to change quantity for isbn:" + isbn);
+
+			Iterator<Map.Entry<Book, Integer>> bookIterator = cart.getIterator();
+			while (bookIterator.hasNext()) {
+				Map.Entry<Book, Integer> entry = bookIterator.next();
+				
+				book = entry.getKey();
+				
+				if (book.getIsbn().equalsIgnoreCase(isbn)) {
+					
+					if (command.equalsIgnoreCase(REMOVE_FROM_CART_CMD)) {
+						System.out.println("Removing:" + book.getIsbn() + ":" + book.getTitle());
+						cart.removeBookFromCart(book);
+					}
+					else if (command.equalsIgnoreCase(UPDATE_CART_QUANTITY_CMD)) {
+						System.out.println("Changing Quantity:" + book.getIsbn() + ":" + book.getTitle());
+						String qtyString = request.getParameter(QUANTITY_CMD);
+						if (qtyString != null && !qtyString.isEmpty()) {
+							int qty = Integer.parseInt(qtyString);
+							if (qty > 0)
+								cart.updateQuantity(book, qty);
+							else if (qty == 0)
+								cart.removeBookFromCart(book);
+						}
+					}
+					request.getSession().setAttribute(SESSION_CART, cart);
+					break;
+				}
+			}
+		}
+	}
+
+	private void addToCartFromRequest(HttpServletRequest request, String command) {
+		
+		String isbn = null;
+
+		isbn = request.getParameter(ISBN_CMD);
+
+		if (isbn != null && !isbn.isEmpty()) {
+			System.out.println("Trying to add isbn:" + isbn);
 			@SuppressWarnings("unchecked")
 			List<Book> list = (List<Book>) request.getSession().getAttribute(SESSION_LIST);
 			if (list != null) {
 				for (Book book : list) {
 					if (book.getIsbn().equalsIgnoreCase(isbn)) {
 						Cart cart = getCartFromSession(request);
-						
-						if (command.equalsIgnoreCase(ADD_TO_CART_CMD))
-							cart.addBookToCart(book);
-						else if (command.equalsIgnoreCase(REMOVE_FROM_CART_CMD))
-							cart.removeBookFromCart(book);
-						else if (command.equalsIgnoreCase(UPDATE_CART_QUANTITY_CMD)) {
-							String qtyString = request.getParameter(QUANTITY_CMD);
-							if (qtyString != null && !qtyString.isEmpty()) {
-								int qty = Integer.parseInt(qtyString);
-								if (qty > 0)
-									cart.updateQuantity(book, qty);
-								else if (qty == 0)
-									cart.removeBookFromCart(book);
-							}
-						}
+						System.out.println("Adding:" + book.getIsbn() + ":" + book.getTitle());
+						cart.addBookToCart(book);
 						request.getSession().setAttribute(SESSION_CART, cart);
+						break;
 					}
 				}
 			}

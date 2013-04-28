@@ -16,8 +16,15 @@
 	<%@ page import="java.util.Iterator"%>
 	<%@ page import="java.util.Map"%>
 	<%@ page import="bookstore.entity.Book"%>
+	<%@ page import="java.text.DecimalFormat"%>
+
+
 
 	<%
+		DecimalFormat df = new DecimalFormat();
+		df.setMinimumFractionDigits(2);
+		df.setMaximumFractionDigits(2);
+
 		Cart cart = null;
 
 		if (session.getAttribute("cart") != null) {
@@ -25,18 +32,19 @@
 		}
 	%>
 	<jsp:include page="./header.jsp" />
-	
+
 	<h4>Order Confirmation</h4>
 	<p>Thank you for shopping with us!</p>
 	<p>Your order contains the following item(s):</p>
 
 	<h4>Items</h4>
-	<table>
+	<table class="shoppingCart">
 		<jsp:useBean id="card" scope="session" class="bookstore.CreditCard" />
+		<jsp:useBean id="user" scope="session" class="bookstore.entity.User" />
 
 		<tr align="left">
-			<th>Title</th>
-			<th>Price</th>
+			<th width=200px>Title</th>
+			<th width=50px>Price</th>
 			<th>Quantity</th>
 		</tr>
 		<%
@@ -48,7 +56,7 @@
 		%>
 		<tr>
 			<td><%=entry.getKey().getTitle()%></td>
-			<td><%=entry.getKey().getPrice()%> <%
+			<td>$<%=df.format(entry.getKey().getPrice())%> <%
  	grandTotal += entry.getKey().getPrice() * entry.getValue();
  %></td>
 			<td><%=entry.getValue()%></td>
@@ -58,13 +66,21 @@
 		%>
 		<tr>
 			<td />
-			<td><%=Math.floor(grandTotal * 100) / 100%></td>
+			<td>$<%=df.format(cart.getTotal())%></td>
 			<td />
 		</tr>
 	</table>
 	<table>
 		<tr>
 			<h4>Shipping Info</h4>
+		</tr>
+		<tr>
+			<td align="right">First Name:</td>
+			<td><jsp:getProperty name="user" property="firstName" /></td>
+		</tr>
+		<tr>
+			<td align="right">Last Name:</td>
+			<td><jsp:getProperty name="user" property="lastName" /></td>
 		</tr>
 		<tr>
 			<td align="right">Address:</td>
@@ -91,7 +107,6 @@
 			<td align="right">Zip Code:</td>
 			<td><jsp:getProperty name="card" property="zipcode" /></td>
 		</tr>
-		
 	</table>
 </body>
 </html>

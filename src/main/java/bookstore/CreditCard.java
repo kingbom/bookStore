@@ -21,6 +21,8 @@ public class CreditCard {
 	private boolean creditCardTypeMissing = true;
 	private String cardNumber = "";
 	private boolean cardNumberMissing = true;
+	private static final String CREDIT_CARD_REGEX = "^[0-9]+$";
+	private boolean cardNumberInvalid = true;
 	private String expMonth = "January";
 	private String expYear = "2013";
 	private boolean expDateMissing = true;
@@ -30,6 +32,7 @@ public class CreditCard {
 		
 		if (creditCardTypeMissing ||
 				cardNumberMissing ||
+				cardNumberInvalid ||
 				expDateMissing ||
 				addressFirstLineMissing ||
 				addressSecondLineMissing ||
@@ -66,11 +69,19 @@ public class CreditCard {
 	
 	public void setCardNumber(String cardNumber) {
 		this.cardNumber = cardNumber;
+		if (cardNumber != null)  {
+			this.cardNumberInvalid = cardNumber.matches(CREDIT_CARD_REGEX) ? false : true;
+			System.out.println("cardNumber:" + cardNumber + " Invalid:" + this.cardNumberInvalid);
+		}
 		cardNumberMissing = (cardNumber == null || cardNumber.isEmpty()) ? true : false;
 	}
 	
 	public boolean isCardNumberMissing() {
 		return (this.cardStatus == CreditCardStatus.NEW) ? false : cardNumberMissing;
+	}
+	
+	public boolean isCardNumberInvalid() {
+		return this.cardNumberInvalid;
 	}
 	
 	public String getExpMonth() {
