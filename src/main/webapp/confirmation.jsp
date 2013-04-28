@@ -107,6 +107,10 @@
 			<td align="right">Zip Code:</td>
 			<td><jsp:getProperty name="card" property="zipcode" /></td>
 		</tr>
+		<tr>
+			<td align="right">Card Type:</td>
+			<td><jsp:getProperty name="card" property="creditCardType" /></td>
+		</tr>
 	</table>
 </body>
 </html>

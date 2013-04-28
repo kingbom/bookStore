@@ -50,10 +50,10 @@
 							<td align="right">
 								<%
 									if (card.isAddressSecondLineMissing()) {
-								%><warn>*</warn><%
+								%><warn>*</warn>
+								<%
 									}
-								%>
-								Address(Second Line): 
+								%> Address(Second Line):
 							</td>
 							<td><input type="text" name="addressSecondLine"
 								value="<jsp:getProperty name="card"
@@ -111,16 +111,17 @@
  	}
  %>Card Type:
 							</td>
-							<td><input type="text" name="creditCardType"
-								value="<jsp:getProperty name="card"
-                      property="creditCardType"/>">
+							<td><select name="creditCardType">
+									<option value="VISA" <%if(card.getCreditCardType().equals("VISA")){ %> selected <%} %>>VISA</option>
+									<option value="Discover" <%if(card.getCreditCardType().equals("Discover")){ %> selected <%} %>>Discover</option>
+							</select>
 							</td>
 						</tr>
 						<tr>
 
 							<td align="right">
 								<%
-									if (card.isCardNumberMissing()) {
+									if (card.isCardNumberMissing() || card.isCardNumberInvalid()) {
 								%> <warn>*</warn> <%
  	}
  %>Card Number:
