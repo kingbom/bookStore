@@ -1,8 +1,8 @@
 <%@ page import="bookstore.entity.User;"%>
 <table width="800px" border="0" cellspacing="0" cellpadding="0">
 	<tr>
-		<td width=200px><img id="mainLogo"
-			src="./resources/images/booksrus.jpg" /></td>
+		<td width=200px><a href="."><img id="mainLogo"
+			src="./resources/images/booksrus.jpg" /></a></td>
 		<td width=250px></td>
 		<td width=250px valign="top">
 			<%

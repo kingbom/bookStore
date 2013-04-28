@@ -421,16 +421,23 @@ public class BookStoreServlet extends HttpServlet {
 		if (categoryString != null && !categoryString.isEmpty()) {
 			if (categoryString.equalsIgnoreCase(ON_SPECIAL_CMD)) {
 				list = bookDatabaseAccessor.getSpecialBooks();
+				request.setAttribute(CATEGORY_CMD, "On Special");
 			}
 			
 			else {
 				category = Category.valueOf(categoryString);
-				list = bookDatabaseAccessor.getBooks(category);				
+				list = bookDatabaseAccessor.getBooks(category);	
+				if (category.equals(Category.ScienceFiction)) {
+					request.setAttribute(CATEGORY_CMD, "Science Fiction");
+				} else {
+					request.setAttribute(CATEGORY_CMD, categoryString);
+				}
 			}
 		}
 		
 		else if (searchString != null && !searchString.isEmpty()) {
 			list = bookDatabaseAccessor.getBookByKeyword(searchString);
+			request.setAttribute(CATEGORY_CMD, "Search Results");
 		}
 		
 		request.getSession().setAttribute(SESSION_LIST, list);								
