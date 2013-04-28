@@ -68,7 +68,7 @@ public class BookStoreServlet extends HttpServlet {
 	private static final String EMAIL_SUBJECT = "BooksrUs Purchase Confirmation";
 	private static String EMAIL_BODY1 = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">" +
 			"<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=US-ASCII\">" +
-			"<title>BooksrUs Purchase Confirmation</title></head><body>Confirmation Email Body</body></html>";
+			"<title>BooksrUs Purchase Confirmation</title></head><body>Your order has been submitted!</body></html>";
        
 	//@Autowired
 	UserDatabaseAccessor userDatabaseAccessor;
@@ -190,7 +190,7 @@ public class BookStoreServlet extends HttpServlet {
 				card = createCardFromRequest(request);
 				card.validateCard();
 				if (card.isCreditCardValid()) {
-//					sendConfirmationEmailFromRequest(request);
+					sendConfirmationEmailFromRequest(request);
 					url = CONFIRMATION_JSP;
 				}
 				else

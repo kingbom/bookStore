@@ -34,7 +34,6 @@ public class User implements Serializable{
 	private String email = "";
 	boolean emailAddressDupl = true;
 	boolean emailAddressMissing = true;
-//	boolean emailAddressInvalid = true;
 	//@NotEmpty
 	private String firstName = "";
 	boolean firstNameMissing = true;
@@ -246,10 +245,7 @@ public class User implements Serializable{
 	public boolean isEmailAddressMissing() {
 		return (userStatus == UserStatus.NEW) ? false: emailAddressMissing;
 	}
-/*	public boolean isEmailAddressInvalid() {
-		return emailAddressInvalid;
-	}
-*/	public boolean isFirstNameMissing() {
+	public boolean isFirstNameMissing() {
 		return (userStatus == UserStatus.NEW) ? false: firstNameMissing;
 	}
 	public boolean isPasswordMissing() {
@@ -287,11 +283,7 @@ public class User implements Serializable{
 	 */
 	public void setEmail(String email) {
 		this.email = email;
-/*		if (email != null) {
-			this.emailAddressInvalid = email.matches(EMAIL_REGEX) ? false : true;
-			System.out.println("emailAddressInvald:" + this.emailAddressInvalid);
-		}
-*/		this.emailAddressMissing = (email == null || email.isEmpty()) ? true : false;
+		this.emailAddressMissing = (email == null || email.isEmpty()) ? true : false;
 	}
 	/**
 	 * @param firstName the firstName to set
@@ -351,7 +343,6 @@ public class User implements Serializable{
 		}
 		
 		if (emailAddressMissing ||
-//				emailAddressInvalid ||
 				emailAddressDupl ||
 				firstNameMissing ||
 				lastNameMissing) {

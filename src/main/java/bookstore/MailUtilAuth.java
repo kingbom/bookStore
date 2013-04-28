@@ -6,8 +6,8 @@ import javax.mail.internet.*;
 public class MailUtilAuth {
 	
 	  private static final String SMTP_HOST_NAME = "smtp.gmail.com";
-	  private static final String SMTP_AUTH_USER = "email";
-	  private static final String SMTP_AUTH_PWD  = "pwd";
+	  private static final String SMTP_AUTH_USER = "booksrus393";
+	  private static final String SMTP_AUTH_PWD  = "jhu605.782";
 	  private static final String CC_ADDRESS = "mark@the-bucks.org";
 
 	  public static void sendMail(String to, String from,
