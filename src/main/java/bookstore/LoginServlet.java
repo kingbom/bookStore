@@ -63,9 +63,9 @@ public class LoginServlet extends HttpServlet {
 		
 		url = BookStoreServlet.MAIN_JSP;
 		userName = request.getRemoteUser();
-//		user = userDatabaseAccessor.getUser(userName);
-		user = new User();
-		user.setEmail(userName);
+		user = userDatabaseAccessor.getUser(userName);
+//		user = new User();
+//		user.setEmail(userName);
 		System.out.println("LoginServlet - url: " + url + " userName:" + userName + " user:" + user);
 		user.setUserStatus(UserStatus.LOGGED_IN);
 		request.getSession().setAttribute(BookStoreServlet.SESSION_USER, user);
@@ -74,5 +74,4 @@ public class LoginServlet extends HttpServlet {
 		dispatcher.forward(request, response);
 		
 	}
-
 }
