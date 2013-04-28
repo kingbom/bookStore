@@ -356,7 +356,7 @@ public class BookStoreServlet extends HttpServlet {
 	private void createBookList(HttpServletRequest request) {
 		@SuppressWarnings("unchecked")
 		List<Book> list = (List<Book>) request.getSession().getAttribute(SESSION_LIST);
-		if (list == null) {
+		if (list == null || list.size() == 0) {
 			insertBooks();
 			list = bookDatabaseAccessor.getSpecialBooks();
 			request.getSession().setAttribute(SESSION_LIST, list);														
