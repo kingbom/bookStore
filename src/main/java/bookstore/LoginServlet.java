@@ -10,8 +10,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import bookstore.entity.User;
 import bookstore.entity.User.UserStatus;
+import bookstore.workerbeans.BookDatabaseAccessor;
+import bookstore.workerbeans.UserDatabaseAccessor;
 
 /**
  * Servlet implementation class LoginServlet
@@ -19,13 +23,16 @@ import bookstore.entity.User.UserStatus;
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	//@Autowired
+	UserDatabaseAccessor userDatabaseAccessor;
+	
+	ClassPathXmlApplicationContext springContext;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
     public LoginServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -33,6 +40,10 @@ public class LoginServlet extends HttpServlet {
 	 */
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
+		String contextLocation = "WEB-INF/spring/applicationContext.xml";
+		//String contextLocation = "file:src/main/webapp/WEB-INF/spring/applicationContext.xml";
+		springContext = new ClassPathXmlApplicationContext(contextLocation);
+		userDatabaseAccessor=springContext.getBean(UserDatabaseAccessor.class);
 	}
 
 	/**
@@ -52,13 +63,12 @@ public class LoginServlet extends HttpServlet {
 		
 		url = BookStoreServlet.MAIN_JSP;
 		userName = request.getRemoteUser();
-//TODO - plug in call to retrieve user from the database
+//		user = userDatabaseAccessor.getUser(userName);
 		user = new User();
 		user.setEmail(userName);
+		System.out.println("LoginServlet - url: " + url + " userName:" + userName + " user:" + user);
 		user.setUserStatus(UserStatus.LOGGED_IN);
 		request.getSession().setAttribute(BookStoreServlet.SESSION_USER, user);
-
-		System.out.println("LoginServlet - url: " + url + " userName:" + userName);
 
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
 		dispatcher.forward(request, response);

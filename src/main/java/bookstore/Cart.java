@@ -18,18 +18,28 @@ public class Cart {
 	}
 	
 	public void addBookToCart(Book book) {
-		bookHM.put(book, 1);
-		setTotal(getTotal() + book.getPrice());
+		if (bookHM.containsKey(book)) {
+			updateQuantity(book,bookHM.get(book) + 1);			
+		}
+		else {
+			bookHM.put(book, 1);
+			setTotal(getTotal() + book.getPrice());
+		}
 	}
 	
 	public void removeBookFromCart(Book book) {
+		int oldQuantity = bookHM.get(book);
+		setTotal(getTotal() - (book.getPrice() * oldQuantity));
 		bookHM.remove(book);
-		setTotal(getTotal() - book.getPrice());
 	}
 
 	public void updateQuantity(Book book, int quantity) {
+		int oldQuantity = bookHM.get(book);
+		System.out.println("changing quantity from:" + oldQuantity + " to:" + quantity);
+		
+		setTotal(getTotal() - (book.getPrice() * oldQuantity));
+		setTotal(getTotal() + (book.getPrice() * quantity));
 		bookHM.put(book, quantity);
-		setTotal(book.getPrice() * quantity);
 	}
 	
 	public Iterator<Map.Entry<Book, Integer>> getIterator () {
