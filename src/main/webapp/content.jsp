@@ -26,9 +26,11 @@
 %>
 <table class="bookList">
 	<%
-		if(request.getAttribute("category") !=null) {
+		if(request.getSession().getAttribute("category") !=null) {
 	%>
-		<h4><%=request.getAttribute("category") %></h4>
+		<h4><%=request.getSession().getAttribute("category") %></h4>
+	<% } else { %>
+		
 	<% } %>
 	<%
 		for (Book book : bookList) {
