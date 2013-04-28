@@ -50,6 +50,8 @@ public class User implements Serializable{
 	private String zipcode = "";
 	private boolean zipcodeMissing = true;
 	
+	private final String role = "user";
+	
 	//No arg constructor needed for jpa
 	public User(){}
 	
