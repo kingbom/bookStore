@@ -25,6 +25,8 @@
 
 		if (session.getAttribute("cart") != null) {
 			cart = (Cart) session.getAttribute("cart");
+			
+			if(cart.getTotal() > 0.001) {
 	%>
 	<table width=800px>
 		<tr>
@@ -94,6 +96,30 @@
 			</td>
 		</tr>
 	</table>
+	<%
+		} else {
+	%>
+	<table width=800px>
+		<tr>
+			<td colspan=2><jsp:include page="./header.jsp" /><br /></td>
+		</tr>
+		<tr>
+			<td width="150px" valign="top" align="left"><jsp:include
+					page="./leftColumn.jsp" /></td>
+			<td width="650px" valign="top" align="left"><h4>No items in
+					cart</h4></td>
+		</tr>
+		<tr>
+			<td colspan=2>
+				<p>Footer</p>
+			</td>
+		</tr>
+	</table>
+
+	<%
+		}
+	%>
+
 	<%
 		} else {
 	%>
