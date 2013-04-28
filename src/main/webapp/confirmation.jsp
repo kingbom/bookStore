@@ -112,5 +112,6 @@
 			<td><jsp:getProperty name="card" property="creditCardType" /></td>
 		</tr>
 	</table>
+	<a href="./BookStoreServlet?command=NewCart">Continue Shopping</a>
 </body>
 </html>

@@ -90,11 +90,6 @@
 
 			</td>
 		</tr>
-		<tr>
-			<td colspan=2>
-				<p>Footer</p>
-			</td>
-		</tr>
 	</table>
 	<%
 		} else {
@@ -108,11 +103,6 @@
 					page="./leftColumn.jsp" /></td>
 			<td width="650px" valign="top" align="left"><h4>No items in
 					cart</h4></td>
-		</tr>
-		<tr>
-			<td colspan=2>
-				<p>Footer</p>
-			</td>
 		</tr>
 	</table>
 
@@ -135,7 +125,7 @@
 		</tr>
 		<tr>
 			<td colspan=2>
-				<p>Footer</p>
+
 			</td>
 		</tr>
 	</table>

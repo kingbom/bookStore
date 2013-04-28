@@ -50,10 +50,9 @@
 							<td align="right">
 								<%
 									if (card.isAddressSecondLineMissing()) {
-								%><warn>*</warn>
-								<%
-									}
-								%> Address(Second Line):
+								%><warn>*</warn> <%
+ 	}
+ %> Address(Second Line):
 							</td>
 							<td><input type="text" name="addressSecondLine"
 								value="<jsp:getProperty name="card"
@@ -112,10 +111,16 @@
  %>Card Type:
 							</td>
 							<td><select name="creditCardType">
-									<option value="VISA" <%if(card.getCreditCardType().equals("VISA")){ %> selected <%} %>>VISA</option>
-									<option value="Discover" <%if(card.getCreditCardType().equals("Discover")){ %> selected <%} %>>Discover</option>
-							</select>
-							</td>
+									<option value="VISA"
+										<%if (card.getCreditCardType().equals("VISA")) {%> selected
+										<%}%>>VISA</option>
+									<option value="Discover"
+										<%if (card.getCreditCardType().equals("Discover")) {%>
+										selected <%}%>>Discover</option>
+									<option value="American Express"
+										<%if (card.getCreditCardType().equals("American Express")) {%>
+										selected <%}%>>American Express</option>
+							</select></td>
 						</tr>
 						<tr>
 
@@ -140,10 +145,36 @@
  	}
  %>Exp Month:
 							</td>
-							<td><input type="text" name="expMonth"
-								value="<jsp:getProperty name="card"
-                      property="expMonth"/>">
-							</td>
+							<td><select name="expMonth">
+									<option value="January"
+										<%if (card.getExpMonth().equals("January")) {%> selected <%}%>>January</option>
+									<option value="February"
+										<%if (card.getExpMonth().equals("February")) {%> selected
+										<%}%>>February</option>
+									<option value="March"
+										<%if (card.getExpMonth().equals("March")) {%> selected <%}%>>March</option>
+									<option value="April"
+										<%if (card.getExpMonth().equals("April")) {%> selected <%}%>>April</option>
+									<option value="May" <%if (card.getExpMonth().equals("May")) {%>
+										selected <%}%>>May</option>
+									<option value="June"
+										<%if (card.getExpMonth().equals("June")) {%> selected <%}%>>June</option>
+									<option value="July"
+										<%if (card.getExpMonth().equals("July")) {%> selected <%}%>>July</option>
+									<option value="August"
+										<%if (card.getExpMonth().equals("August")) {%> selected <%}%>>August</option>
+									<option value="September"
+										<%if (card.getExpMonth().equals("September")) {%> selected
+										<%}%>>September</option>
+									<option value="October"
+										<%if (card.getExpMonth().equals("October")) {%> selected <%}%>>October</option>
+									<option value="November"
+										<%if (card.getExpMonth().equals("November")) {%> selected
+										<%}%>>November</option>
+									<option value="December"
+										<%if (card.getExpMonth().equals("December")) {%> selected
+										<%}%>>December</option>
+							</select></td>
 						</tr>
 						<tr>
 
@@ -154,10 +185,17 @@
  	}
  %>Exp Year:
 							</td>
-							<td><input type="text" name="expYear"
-								value="<jsp:getProperty name="card"
-                      property="expYear"/>">
-							</td>
+							<td><select name="expYear">
+									<option value="2013"
+										<%if (card.getExpYear().equals("2013")) {%> selected
+										<%}%>>2013</option>
+									<option value="2014"
+										<%if (card.getExpYear().equals("2014")) {%> selected
+										<%}%>>2014</option>
+									<option value="2015"
+										<%if (card.getExpYear().equals("2015")) {%> selected
+										<%}%>>2015</option>
+							</select></td>
 						</tr>
 					</table>
 
@@ -170,9 +208,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td colspan=2>
-				<p>Footer</p>
-			</td>
+			<td colspan=2></td>
 		</tr>
 	</table>
 

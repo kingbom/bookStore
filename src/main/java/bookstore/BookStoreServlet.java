@@ -200,13 +200,15 @@ public class BookStoreServlet extends HttpServlet {
 			else if (command.equalsIgnoreCase(LOGOUT_CMD)) {
 				request.getSession().invalidate();
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(MAIN_JSP);
-				dispatcher.forward(request, response);						
+				dispatcher.forward(request, response);
+				return;
 			}
 
 			else if (command.equalsIgnoreCase(NEW_CART_CMD)) {				
 				request.getSession().setAttribute(SESSION_CART, new Cart());
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(MAIN_JSP);
-				dispatcher.forward(request, response);						
+				dispatcher.forward(request, response);					
+				return;
 			}
 
 		}

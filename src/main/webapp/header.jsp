@@ -41,7 +41,7 @@
 						<%
 							if (user != null) {
 								if (user.isUserLoggedIn()) {
-						%> <a href="./LoginServlet">Log out</a> <%
+						%> <a href="./BookStoreServlet?command=Logout">Log out</a> <%
  	} else {
  %> <a href="./LoginServlet">Log in</a> <%
  	}

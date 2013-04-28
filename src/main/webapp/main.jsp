@@ -26,7 +26,7 @@ booklist all lower case session object>
 		</tr>
 		<tr>
 			<td colspan=2>
-				<p>Footer</p>
+
 			</td>
 		</tr>
 	</table>

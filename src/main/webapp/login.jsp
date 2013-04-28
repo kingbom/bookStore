@@ -43,7 +43,7 @@
 		</tr>
 		<tr>
 			<td>
-				<p>Footer</p>
+
 			</td>
 		</tr>
 	</table>
