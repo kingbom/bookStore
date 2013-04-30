@@ -66,8 +66,8 @@ public class LoginCheckoutServlet extends HttpServlet {
 		user = userDatabaseAccessor.getUser(userName);
 		System.out.println("LoginServlet - url: " + url + " userName:" + userName + " user:" + user);
 		user.setUserStatus(UserStatus.LOGGED_IN);
-		initializeBillingAddress(request);
 		request.getSession().setAttribute(BookStoreServlet.SESSION_USER, user);
+		initializeBillingAddress(request);
 
 
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
