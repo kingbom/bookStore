@@ -33,10 +33,7 @@
 	<security-constraint>
 	    <web-resource-collection>
 	        <web-resource-name>bookstore</web-resource-name>
-	        <url-pattern>/checkout.jsp</url-pattern>
-	        <url-pattern>/login.jsp</url-pattern>
-	        <url-pattern>/display_checkout.jsp</url-pattern>
-	        <!-- <url-pattern>/*</url-pattern> -->
+			<url-pattern>/*</url-pattern>
 	    </web-resource-collection>	
 	    <user-data-constraint>
 	        <transport-guarantee>CONFIDENTIAL</transport-guarantee>
