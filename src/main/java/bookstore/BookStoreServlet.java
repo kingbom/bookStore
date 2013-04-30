@@ -321,11 +321,15 @@ public class BookStoreServlet extends HttpServlet {
 						System.out.println("Changing Quantity:" + book.getIsbn() + ":" + book.getTitle());
 						String qtyString = request.getParameter(QUANTITY_CMD);
 						if (qtyString != null && !qtyString.isEmpty()) {
-							int qty = Integer.parseInt(qtyString);
-							if (qty > 0)
-								cart.updateQuantity(book, qty);
-							else if (qty == 0)
-								cart.removeBookFromCart(book);
+							try {
+								int qty = Integer.parseInt(qtyString);
+								if (qty > 0)
+									cart.updateQuantity(book, qty);
+								else if (qty == 0)
+									cart.removeBookFromCart(book);
+							} catch (NumberFormatException e) {
+								System.out.println("NumberFormatException: " + e.getMessage());
+							}
 						}
 					}
 					request.getSession().setAttribute(SESSION_CART, cart);
