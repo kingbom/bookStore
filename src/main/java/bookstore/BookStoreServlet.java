@@ -1,6 +1,7 @@
 package bookstore;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -64,11 +65,14 @@ public class BookStoreServlet extends HttpServlet {
 	protected static final String CHECKOUT_JSP = "/checkout.jsp";
 	
 	private static final long serialVersionUID = 1L;
-	private static final String EMAIL_FROM_ADDRESS="mbuck1@jhu.edu";
+	private static final String EMAIL_FROM_ADDRESS="booksrus393@gmail.com";
 	private static final String EMAIL_SUBJECT = "BooksrUs Purchase Confirmation";
 	private static String EMAIL_BODY1 = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">" +
 			"<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=US-ASCII\">" +
-			"<title>BooksrUs Purchase Confirmation</title></head><body>Your order has been submitted!</body></html>";
+			"<title>BooksrUs Order Confirmation</title></head><body><h4>Order Confirmation</h4>" +
+			"<p>Thank you for shopping with us!</p><p>Your order contains the following item(s):</p><h4>Items</h4>" +
+			"<table><tr align=\"left\"><th width=200px>Title</th><th width=50px>Price</th><th>Quantity</th></tr>";
+
        
 	//@Autowired
 	UserDatabaseAccessor userDatabaseAccessor;
@@ -232,8 +236,32 @@ public class BookStoreServlet extends HttpServlet {
 		card = getCreditCardFromSession(request);
 		cart = getCartFromSession(request);
 		
+		DecimalFormat df = new DecimalFormat();
+		df.setMinimumFractionDigits(2);
+		df.setMaximumFractionDigits(2);
+
 		toEmailAddress = user.getEmail();
 		emailBody = new StringBuffer(EMAIL_BODY1);
+
+		Iterator<Map.Entry<Book, Integer>> bookIterator = cart
+				.getIterator();
+		
+		while (bookIterator.hasNext()) {
+			Map.Entry<Book, Integer> entry = bookIterator.next();
+			emailBody.append("<tr><td>" + entry.getKey().getTitle() + "</td><td>$" + df.format(entry.getKey().getPrice()) + "</td><td>" + entry.getValue() +"</td></tr>");
+		}
+		emailBody.append("<tr><td /><td>$" + df.format(cart.getTotal()) + "</td><td /></tr></table>");
+
+		emailBody.append("<table><tr><h4>Shipping Info</h4></tr><tr><td align=\"right\">First Name:</td><td>" +
+				user.getFirstName() + "</td></tr><tr><td align=\"right\">Last Name:</td><td>" +
+				user.getLastName() + "</td></tr><tr><td align=\"right\">Address:</td><td>" +
+				card.getAddressFirstLine() + "</td></tr><tr><td align=\"right\">Address(Second Line):</td><td>" +
+				card.getAddressSecondLine() + "</td></tr><tr><td align=\"right\">City:</td><td>" +
+				card.getCity() + "</td></tr><tr><td align=\"right\">State:</td><td>" +
+				card.getCity() + "</td></tr><tr><td align=\"right\">Zip Code:</td><td>" +
+				card.getZipcode() + "</td></tr><tr><td align=\"right\">Card Type:</td><td>" +
+				card.getCreditCardType() + "</td></tr></table></body></html>");
+		
 		System.out.println("Sending email to: " + toEmailAddress);
 	
 		try {
