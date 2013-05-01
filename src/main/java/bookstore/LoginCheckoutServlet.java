@@ -6,6 +6,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -68,7 +69,12 @@ public class LoginCheckoutServlet extends HttpServlet {
 		user.setUserStatus(UserStatus.LOGGED_IN);
 		request.getSession().setAttribute(BookStoreServlet.SESSION_USER, user);
 		initializeBillingAddress(request);
-
+		Cookie userIdCookie = new Cookie("userIdCookie", userName); 
+		 //set the age to 1 year 
+		userIdCookie.setMaxAge(60*60*24*365); 
+		 // allow access by the entire application 
+		userIdCookie.setPath("/"); 
+		response.addCookie(userIdCookie); 
 
 		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
 		dispatcher.forward(request, response);
