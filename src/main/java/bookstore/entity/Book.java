@@ -1,5 +1,7 @@
 package bookstore.entity;
 
+import lombok.Data;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -7,6 +9,7 @@ import javax.persistence.Id;
 
 
 @Entity
+@Data
 public class Book {
 	public enum Category{Comedy, History, Romance, ScienceFiction}
 	private String author;
@@ -159,124 +162,5 @@ public class Book {
 		this.category = category;
 		this.description = description;
 		this.isSpecial = isSpecial;
-	}
-
-	/**
-	 * @return the author
-	 */
-	public String getAuthor() {
-		return author;
-	}
-
-	/**
-	 * @return the category
-	 */
-	public Category getCategory() {
-		return category;
-	}
-
-	/**
-	 * @return the description
-	 */
-	public String getDescription() {
-		return description;
-	}
-
-	/**
-	 * @return the isbn
-	 */
-	public String getIsbn() {
-		return isbn;
-	}
-
-	/**
-	 * @return the isSpecial
-	 */
-	public Boolean getIsSpecial() {
-		return isSpecial;
-	}
-
-	/**
-	 * @return the pageCount
-	 */
-	public Integer getPageCount() {
-		return pageCount;
-	}
-
-	/**
-	 * @return the price
-	 */
-	public Double getPrice() {
-		return price;
-	}
-
-	/**
-	 * @return the rating
-	 */
-	public Double getRating() {
-		return rating;
-	}
-
-	/**
-	 * @return the title
-	 */
-	public String getTitle() {
-		return title;
-	}
-
-	/**
-	 * @param author the author to set
-	 */
-	public void setAuthor(String author) {
-		this.author = author;
-	}
-
-	/**
-	 * @param category the category to set
-	 */
-	public void setCategory(Category category) {
-		this.category = category;
-	}
-
-	/**
-	 * @param description the description to set
-	 */
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	/**
-	 * @param isSpecial the isSpecial to set
-	 */
-	public void setIsSpecial(Boolean isSpecial) {
-		this.isSpecial = isSpecial;
-	}
-
-	/**
-	 * @param pageCount the pageCount to set
-	 */
-	public void setPageCount(Integer pageCount) {
-		this.pageCount = pageCount;
-	}
-
-	/**
-	 * @param price the price to set
-	 */
-	public void setPrice(Double price) {
-		this.price = price;
-	}
-
-	/**
-	 * @param rating the rating to set
-	 */
-	public void setRating(Double rating) {
-		this.rating = rating;
-	}
-
-	/**
-	 * @param title the title to set
-	 */
-	public void setTitle(String title) {
-		this.title = title;
 	}
 }
